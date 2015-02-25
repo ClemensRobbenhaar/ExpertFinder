@@ -23,7 +23,7 @@
 <nameValuePair>
 <name>filePath</name>
 <value>
-<string>/resources/wordlists/stopWords_en</string>
+<string>/wordlists/stopWords_de</string>
 </value>
 </nameValuePair>
 </settingsForGroup>

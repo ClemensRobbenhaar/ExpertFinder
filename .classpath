@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src-framework"/>
+	<classpathentry kind="src" path="conf"/>
 	<classpathentry kind="src" path="src-mediawiki"/>
 	<classpathentry kind="src" path="src-test"/>
 	<classpathentry kind="src" path="src-diff"/>
 	<classpathentry kind="src" path="src-md5"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlitejdbc-v054.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -247,5 +249,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jackson-jr-all-2.5.1.jar" sourcepath="lib/jackson-jr-all-2.5.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
