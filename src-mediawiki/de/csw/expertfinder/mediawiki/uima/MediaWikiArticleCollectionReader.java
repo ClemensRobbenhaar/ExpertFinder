@@ -85,6 +85,7 @@ public class MediaWikiArticleCollectionReader extends CollectionReader_ImplBase 
 		Integer articleId = (Integer)getUimaContext().getConfigParameterValue(CONFIG_PARAM_DOCUMENT_ID);
 		String articleName = (String)getUimaContext().getConfigParameterValue(CONFIG_PARAM_DOCUMENT_TITLE);
 		
+		boolean inTransaction = false;
 		try {
 			MediaWikiAPI mediaWiki = MediaWikiAPI.getInstance();
 			
@@ -106,8 +107,9 @@ public class MediaWikiArticleCollectionReader extends CollectionReader_ImplBase 
 				articleId = Integer.parseInt(articleIdString);
 			}
 
+			log.info("starting to use db");
 			persistentStore.beginTransaction();
-
+			inTransaction = true;
 			// Check if we have seen this article before and this is just an update.
 			Document document = persistentStore.getDocument((long)articleId);
 			
@@ -133,7 +135,7 @@ public class MediaWikiArticleCollectionReader extends CollectionReader_ImplBase 
 			
 			log.info("Processing wiki article '" + articleName + "'...");
 		} catch (MediaWikiAPIException e) {
-			persistentStore.rollbackChanges();
+			if (inTransaction) { persistentStore.rollbackChanges(); }
 			log.error("Error querying MediaWiki using the MediaWiki API", e);
 			throw new ResourceInitializationException(e);
 		}
