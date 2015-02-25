@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java
+    </frameworkImplementation>
+    <implementationName>de.csw.expertfinder.confluence.uima.WikiArticleCollectionReader
+    </implementationName>
+    <processingResourceMetaData>
+        <name>ConfluenceWikiArticleCollectionReaderDescriptor</name>
+        <description></description>
+        <version>1.0</version>
+        <vendor></vendor>
+        <configurationParameters>
+                    <configurationParameter>
+                <name>baseUrl</name>
+                <description>The base URL of the confluence installation.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>username</name>
+                <description>The login of the user (can be omitted, if public access).</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>password</name>
+                <description>The password of the user (can be omitted, if public access).</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings />
+        <typeSystemDescription>
+            <imports><!--  we can reuse the media wiki document here -->
+                <import
+                    location="../MediaWikiArticleDocumentAnnotationTypeSystem.xml" />
+            </imports>
+        </typeSystemDescription>
+        <typePriorities />
+        <fsIndexCollection />
+        <capabilities>
+            <capability>
+                <inputs />
+                <outputs>
+                    <type allAnnotatorFeatures="true">de.csw.expertfinder.confluence.uima.types.ArticleRevisionInfo
+                    </type>
+                </outputs>
+                <languagesSupported />
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+    <resourceManagerConfiguration />
+</collectionReaderDescription>
