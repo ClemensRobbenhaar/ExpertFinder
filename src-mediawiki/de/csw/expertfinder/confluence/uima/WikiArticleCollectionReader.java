@@ -73,31 +73,31 @@ public class WikiArticleCollectionReader extends CollectionReader_ImplBase {
     /// the alternative is to mock up the configuration, like it is done in MediaWikiCPERunner
     private void initPage() {
         
-        // here we could store the verisons read so far.
-        // storePage();
-        
-        currentPageVersions = connector.getVersionsInfoForPageId(currentPageId);
-        
-        // we get the version in the wrong order; we want oldest first
-        Collections.reverse(currentPageVersions);
-        
-        // ToDo: filter versions for "automatic conversions" and "revert to previous"
-        
-        // we treat one page as progress for one step ...
-        versionProgress = new ProgressImpl(0, currentPageVersions.size(), "docs", true);
-        allProgress.clear();
-        allProgress.add(versionProgress);
+        new PersistenceStoreFacade.WithPersistence<Object>() {
+
+            @Override
+            public Object execute(PersistenceStoreFacade persistence) throws Exception {
+
+                final long pageId = Long.parseLong(currentPageId);
+                final long lastKnownRevision = loadDocument(persistence, pageId);
+                
+                currentPageVersions = connector.getVersionsInfoForPageId(currentPageId, lastKnownRevision); // since version ?
+                
+                // we get the version in the wrong order; we want oldest first
+                Collections.reverse(currentPageVersions);
+                
+                // ToDo: filter versions for "automatic conversions" and "revert to previous"                
+                // we treat one page as progress for one step ...
+                versionProgress = new ProgressImpl(0, currentPageVersions.size(), "docs", true);
+                allProgress.clear();
+                allProgress.add(versionProgress);
+                return null;
+            }
+            
+        };
     }
 
-    @SuppressWarnings("unused")
-    private void storePage() {
-        
-        final long pageId = Long.parseLong(currentPageId);
-        
-        PersistenceStoreFacade persistentStore = PersistenceStoreFacade.get();
-        
-        LOG.info("starting to use db");
-        persistentStore.beginTransaction();
+    private static long loadDocument(PersistenceStoreFacade persistentStore, long pageId) {
         // Check if we have seen this article before and this is just an update.
         Document document = persistentStore.getDocument(pageId);
         
@@ -106,27 +106,26 @@ public class WikiArticleCollectionReader extends CollectionReader_ImplBase {
         if (document == null) {
             // this is the first time we see this article. Create a new Document in the persistent store.
             lastPersistedRevisionId = 0;
-            document = new Document(pageId, ""); // FIXME: here we would need an (unique!) document title
+            // FIXME: here we would need an (unique!) document title according to the data model
+            // maybe we should drop that constraint for confluence, as the id is better suited (?)
+            document = new Document(pageId, "T"+System.currentTimeMillis());
             persistentStore.save(document);
         } else {
             // we have seen this article before. We only need to start with the last revision.
             Revision lastPersistedRevision = PersistenceStoreFacade.get().getLatestPersistedRevision(pageId);
             lastPersistedRevisionId = lastPersistedRevision == null ? 0 : lastPersistedRevision.getId();
         }
-        
-        persistentStore.commitChanges();
-
+        return lastPersistedRevisionId;
     }
 
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         // nothing to do here (yet)
-        
     }
     
     @Override
-    public boolean hasNext() throws IOException, CollectionException {
+    public boolean hasNext() {
         return !currentPageVersions.isEmpty();
     }
 

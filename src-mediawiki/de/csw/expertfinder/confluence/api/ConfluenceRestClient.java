@@ -79,7 +79,8 @@ public class ConfluenceRestClient {
     }
     
     @SuppressWarnings("unchecked")
-    public List<ConfluencePageVersionInfo> getVersionsInfoForPageId(String pageId) {
+    public List<ConfluencePageVersionInfo> getVersionsInfoForPageId(String pageId, long lastKnownRevision) {
+        // FIXME: lastKnownVersion is unknown
         // ToDo: we have no official way to get at version ... see above
         Map<String, Object> versionData = fetchJsonResponse("/rest/semanticresource/1.0/versions/" + URLEncoder.encode(pageId), null);
         
@@ -191,6 +192,6 @@ public class ConfluenceRestClient {
         System.out.println(cl.getAllSpaceKeys());
         System.out.println(cl.getAllPageIdsForSpace("ds").size());
         System.out.println(cl.getVersionsTextForPageId("819617"));
-        cl.getVersionsInfoForPageId("819282");
+        cl.getVersionsInfoForPageId("819282", 0);
     }
 }
