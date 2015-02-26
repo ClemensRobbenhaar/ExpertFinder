@@ -8,15 +8,15 @@ import org.apache.commons.logging.LogFactory;
 
 import de.csw.expertfinder.confluence.api.ConfluenceRestClient;
 
-public class WikiArticleListing {
+public class WikiDocumentIterator {
     
-    private static final Log LOG = LogFactory.getLog(WikiArticleListing.class);
+    private static final Log LOG = LogFactory.getLog(WikiDocumentIterator.class);
 
     private ConfluenceRestClient connector;
 
     private List<String> pageIds;
 
-    public WikiArticleListing() {
+    public WikiDocumentIterator() {
     }
     
 

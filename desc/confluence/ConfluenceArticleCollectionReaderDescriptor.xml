@@ -10,7 +10,7 @@
         <version>1.0</version>
         <vendor></vendor>
         <configurationParameters>
-                    <configurationParameter>
+            <configurationParameter>
                 <name>baseUrl</name>
                 <description>The base URL of the confluence installation.</description>
                 <type>String</type>

@@ -25,9 +25,6 @@
  ******************************************************************************/
 package de.csw.expertfinder.confluence.uima.deploy;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 
@@ -38,17 +35,13 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionProcessingEngine;
 import org.apache.uima.collection.EntityProcessStatus;
 import org.apache.uima.collection.StatusCallbackListener;
-import org.apache.uima.collection.base_cpm.BaseCollectionReader;
-import org.apache.uima.collection.metadata.CasProcessorConfigurationParameterSettings;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
-import org.apache.uima.collection.metadata.NameValuePair;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.XMLInputSource;
 
 import de.csw.expertfinder.config.Config;
 import de.csw.expertfinder.confluence.uima.WikiArticleCollectionReader;
-import de.csw.expertfinder.confluence.uima.WikiArticleListing;
+import de.csw.expertfinder.confluence.uima.WikiDocumentIterator;
 import de.csw.expertfinder.ontology.OntologyIndex;
 
 /**
@@ -72,7 +65,7 @@ public class ConfluenceCPERunner {
 	
 	CollectionProcessingEngine mCPE;
 
-    private WikiArticleListing articleList;
+    private WikiDocumentIterator documentList;
 
 	/**
 	 * Constructs a {@link ConfluenceCPERunner} instance.
@@ -98,7 +91,7 @@ public class ConfluenceCPERunner {
 	}
 
 	/**
-	 * Processes the next document collection from the document titles file.
+	 * Processes the versions for the next document from the "ArtivleLister 
 	 * 
 	 * @throws UIMAException if an exception inside the CPM occurs.
 	 * @throws IOException if an error occurs while reading the file containing the document titles.
@@ -106,31 +99,34 @@ public class ConfluenceCPERunner {
 	 */
 	public void process() throws UIMAException, IOException, CpeDescriptorException {
 
-		// parse CPE descriptor in file specified on command line
-		CpeDescription cpeDesc;
-		cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource(cpeDescriptorURL));
+		CpeDescription cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource(cpeDescriptorURL));
 
 		// instantiate CPE
 		mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
 
-		// Create and register a Status Callback Listener
+		// Create and register a Status Callback Listener, to start the next run if this one is finished
         mCPE.addStatusCallbackListener(statusCallbackListener);
 		
         WikiArticleCollectionReader collectionReader = (WikiArticleCollectionReader)mCPE.getCollectionReader();
         
+        // set the current page to analyse: doing it in this awkward way is at most only a little less brainwhacking
+        // than mocking up the config, as it is done in MediawikiCPERunner
+        
+        // on the very first run, fetch all pages (reusing the configured confluence connector)
         // this only works because "getCollectionReader" return an initialized object
-        if (articleList == null) {
+        if (documentList == null) {
             log.info("fetch information about all pages");
-            articleList = new WikiArticleListing();
-            articleList.setConnector(collectionReader.getConnector());
-            articleList.initialize();
-            if (!articleList.hasNextPage()) {
+            documentList = new WikiDocumentIterator();
+            documentList.setConnector(collectionReader.getConnector());
+            documentList.initialize();
+            if (!documentList.hasNextPage()) {
                 log.error("no pages found at all!");
                 return;
             }
         }
 
-        String pageId = articleList.nextPageId();
+        // get the next page and start over
+        String pageId = documentList.nextPageId();
         collectionReader.setCurrentPageId(pageId);
 		
         // (Re-)Start Processing
@@ -220,7 +216,7 @@ public class ConfluenceCPERunner {
     public void notifyFinished() {
         // callback after finishing one round
         // try to just restart the thing
-        if (articleList.hasNextPage()) {
+        if (documentList.hasNextPage()) {
             log.info("start with next page");
             try {
                 process();
@@ -242,7 +238,7 @@ public class ConfluenceCPERunner {
 		try {
 			Config.read(ConfluenceCPERunner.class.getResourceAsStream("/ExpertFinder.properties"));
 			// we do that later ...
-			// OntologyIndex.get().load(OntologyIndex.class.getResource(Config.getAppProperty(Config.Key.ONTOLOGY_FILE)));
+			OntologyIndex.get().load(OntologyIndex.class.getResource(Config.getAppProperty(Config.Key.ONTOLOGY_FILE)));
 			final ConfluenceCPERunner runner = new ConfluenceCPERunner(CPE_DESCRIPTOR_URL);
 			
 			runner.setStatusCallbackListener(new BatchStatusCallbackListener(runner));

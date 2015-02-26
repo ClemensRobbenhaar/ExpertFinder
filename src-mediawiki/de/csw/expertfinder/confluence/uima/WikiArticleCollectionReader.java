@@ -20,7 +20,10 @@ import org.apache.uima.util.ProgressImpl;
 
 import de.csw.expertfinder.confluence.api.ConfluencePageVersionInfo;
 import de.csw.expertfinder.confluence.api.ConfluenceRestClient;
+import de.csw.expertfinder.document.Document;
+import de.csw.expertfinder.document.Revision;
 import de.csw.expertfinder.mediawiki.uima.types.ArticleRevisionInfo;
+import de.csw.expertfinder.persistence.PersistenceStoreFacade;
 
 /**
  * ToDo: both a collector of all wiki pages, *and* an "article producer" for UIMA.
@@ -41,7 +44,6 @@ public class WikiArticleCollectionReader extends CollectionReader_ImplBase {
     
     private ConfluenceRestClient connector;
 
-
     public void setCurrentPageId(String currentPageId) {
         this.currentPageId = currentPageId;
         initPage();
@@ -60,21 +62,20 @@ public class WikiArticleCollectionReader extends CollectionReader_ImplBase {
     
     /** this just initializes for every version extraction ... */
     public void initialize() throws ResourceInitializationException {
- 
-        String baseUrl = (String)getUimaContext().getConfigParameterValue("baseUrl");
+        super.initialize();
         
-        
-        connector = new ConfluenceRestClient(baseUrl);
-
+        connector = new ConfluenceRestClient((String)getUimaContext().getConfigParameterValue("baseUrl"));
         connector.setUsername((String)getUimaContext().getConfigParameterValue("username"));
         connector.setPassword((String)getUimaContext().getConfigParameterValue("password"));
-        
-        
     }
     
     /// woha, uh, oh: callback *after* being initialized ... as we need the config first get the page ids ...
     /// the alternative is to mock up the configuration, like it is done in MediaWikiCPERunner
-    private void initPage() {        
+    private void initPage() {
+        
+        // here we could store the verisons read so far.
+        // storePage();
+        
         currentPageVersions = connector.getVersionsInfoForPageId(currentPageId);
         
         // we get the version in the wrong order; we want oldest first
@@ -87,6 +88,36 @@ public class WikiArticleCollectionReader extends CollectionReader_ImplBase {
         allProgress.clear();
         allProgress.add(versionProgress);
     }
+
+    @SuppressWarnings("unused")
+    private void storePage() {
+        
+        final long pageId = Long.parseLong(currentPageId);
+        
+        PersistenceStoreFacade persistentStore = PersistenceStoreFacade.get();
+        
+        LOG.info("starting to use db");
+        persistentStore.beginTransaction();
+        // Check if we have seen this article before and this is just an update.
+        Document document = persistentStore.getDocument(pageId);
+        
+        long lastPersistedRevisionId;
+        
+        if (document == null) {
+            // this is the first time we see this article. Create a new Document in the persistent store.
+            lastPersistedRevisionId = 0;
+            document = new Document(pageId, ""); // FIXME: here we would need an (unique!) document title
+            persistentStore.save(document);
+        } else {
+            // we have seen this article before. We only need to start with the last revision.
+            Revision lastPersistedRevision = PersistenceStoreFacade.get().getLatestPersistedRevision(pageId);
+            lastPersistedRevisionId = lastPersistedRevision == null ? 0 : lastPersistedRevision.getId();
+        }
+        
+        persistentStore.commitChanges();
+
+    }
+
 
     @Override
     public void close() throws IOException {
