@@ -26,7 +26,7 @@
      xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
      xmlns:unnamed="http://www.owl-ontologies.com/unnamed.owl#">
     <owl:Ontology rdf:about="">
-        <owl:imports rdf:resource="http://protege.stanford.edu/plugins/owl/protege"/>
+        <!-- owl:imports rdf:resource="http://protege.stanford.edu/plugins/owl/protege"/ -->
     </owl:Ontology>
     
 
