@@ -33,31 +33,20 @@ import static de.csw.expertfinder.config.Config.Key.EXPERTISE_WEIGHT_SECTION_4_C
 import static de.csw.expertfinder.config.Config.Key.EXPERTISE_WEIGHT_SECTION_5_CONTRIBUTION;
 import static de.csw.expertfinder.config.Config.Key.EXPERTISE_WEIGHT_SECTION_6_CONTRIBUTION;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.io.FileUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 import de.csw.expertfinder.config.Config;
@@ -67,7 +56,6 @@ import de.csw.expertfinder.document.Concept;
 import de.csw.expertfinder.document.Document;
 import de.csw.expertfinder.ontology.OntologyIndex;
 import de.csw.expertfinder.persistence.PersistenceStoreFacade;
-import de.csw.expertfinder.test.util.StopWatch;
 import de.csw.expertfinder.util.Pair;
 
 /**
@@ -310,9 +298,21 @@ public class ExpertiseModel {
 	}
 	
 	public double getExpertiseScore(String authorName, String topicName) {
+	    topicName = topicName.toLowerCase();
 		OntClass topicClass = OntologyIndex.get().getOntClass(topicName);
 		if (topicClass == null) {
-			return 0d;
+		    
+		    for (ExtendedIterator<OntClass> it = OntologyIndex.get().getModel().listClasses(); it.hasNext(); ) {
+		        OntClass cls = it.next();
+		        System.err.print("we have class " + cls.getURI());
+		        for (ExtendedIterator<RDFNode> lbl = cls.listLabels(null); lbl.hasNext(); ) {
+		            String label = lbl.next().asLiteral().getString();
+		            System.err.print(" "+label);
+		        }
+		        System.err.println();
+		    }
+		    throw new IllegalStateException("no class for " + topicName);
+			//return 0d;
 		}
 				
 		persistenceStore.beginTransaction();
@@ -619,8 +619,6 @@ public class ExpertiseModel {
 		
 		Set<String> result = new TreeSet<String>();
 
-		OntModel model = OntologyIndex.get().getModel();
-
 		persistenceStore.beginTransaction();
 		
 		Author author = persistenceStore.getAuthor(authorName);		
@@ -630,13 +628,7 @@ public class ExpertiseModel {
 
 		if (!contributions.isEmpty()) {
 			for (AuthorContribution authorContribution : contributions) {
-				String uri = authorContribution.getConcept().getUri();
-				OntClass clazz = model.getOntClass(uri);
-				ExtendedIterator iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
-				while(iter.hasNext()) {
-					String label = ((Literal)iter.next()).getString();
-					result.add(label);
-				}
+				addLabels(authorContribution.getConcept(), result);
 			}
 			return result;
 		}
@@ -652,25 +644,43 @@ public class ExpertiseModel {
 		persistenceStore.endTransaction();
 		
 		for (Concept topic : directContributions) {
-			OntClass clazz = model.getOntClass(topic.getUri());
-			ExtendedIterator iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
-			while(iter.hasNext()) {
-				String label = ((Literal)iter.next()).getString();
-				result.add(label);
-			}
+            addLabels(topic, result);
 		}
 		
 		for (Concept topic : indirectContributions) {
-			OntClass clazz = model.getOntClass(topic.getUri());
-			ExtendedIterator iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
-			while(iter.hasNext()) {
-				String label = ((Literal)iter.next()).getString();
-				result.add(label);
-			}
+		    addLabels(topic, result);
 		}
 		
 		return result;
 	}
+	
+	private static void addLabels(Concept topic, Set<String> result) {
+	    OntModel model = OntologyIndex.get().getModel();
+        OntClass clazz = model.getOntClass(topic.getUri());
+        ExtendedIterator<RDFNode> iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
+        while(iter.hasNext()) {
+            String label = ((Literal)iter.next()).getString();
+            result.add(label);
+        }
+	}
+	
+	/**
+     * Returns the names of all known authors.
+     * @return a list containing the names of all authors. never null
+     */
+    public List<String> getKnownAuthors() {
+        persistenceStore.beginTransaction();        
+        List<Author> authors = persistenceStore.listAllAuthors(0);
+        persistenceStore.endTransaction();
+        
+        List<String> names = new ArrayList<String>(authors.size());
+        for (Author author : authors) {
+            names.add(author.getName());
+        }
+        
+        return names; 
+    }
+
 	
 	/**
 	 * Returns the TF/IDF weighting for the given word in the given document.

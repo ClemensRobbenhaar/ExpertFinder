@@ -34,6 +34,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.StringArray;
+import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import de.csw.expertfinder.ontology.OntologyIndex;
@@ -80,7 +81,7 @@ public class ConceptMatcher extends JCasAnnotator_ImplBase {
 	@Override
 	public void process(JCas cas) throws AnalysisEngineProcessException {
 		// we need the nouns and their word stem annotations here.
-		FSIterator nounAnnotIter = cas.getAnnotationIndex(Noun.type).iterator();
+		FSIterator<Annotation> nounAnnotIter = cas.getAnnotationIndex(Noun.type).iterator();
 		while(nounAnnotIter.hasNext()) {
 			Noun noun = (Noun)nounAnnotIter.next();
 			List<String> matchingConceptURIs = ontologyIndex.getExactMatches(noun.getWordStem());

@@ -325,6 +325,19 @@ public class PersistenceStoreFacade {
         return result;
     }
 
+
+    /**
+     * Returns the list of all known authors
+     * @param limit if positive, limit the amount of results
+     * @return a list of authors, never null
+     */
+    public List<Author> listAllAuthors(int limit) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Author.class);
+        if (limit > 0) { criteria.setFetchSize(limit); }
+        List<Author> result = (List<Author>) criteria.list();
+        return result;
+    }
     /**
      * Returns the concept with the given URI or null if no such concept exists.
      * @param uri

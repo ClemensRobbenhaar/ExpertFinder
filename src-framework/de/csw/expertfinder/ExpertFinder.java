@@ -196,14 +196,22 @@ public class ExpertFinder {
 	}
 	
 	/**
-	 * Returns all topics the given author has contributed to.
-	 * @param authorName
+	 * Returns all known authors.
 	 * @return
 	 */
-	public Set<String> getTopicsForAuthor(String authorName) {
-		return ExpertiseModel.get().getTopicsForAuthor(authorName);
+	public static List<String> getKnownAuthors() {
+		return ExpertiseModel.get().getKnownAuthors();
 	}
-	
+
+	/**
+     * Returns all topics the given author has contributed to.
+     * @param authorName
+     * @return
+     */
+    public static Set<String> getTopicsForAuthor(String authorName) {
+        return ExpertiseModel.get().getTopicsForAuthor(authorName);
+    }
+
 	/**
 	 * Returns the given author's consolidated expertise score for the given
 	 * topic and similar topics, based on the similarity metric and the
@@ -214,20 +222,21 @@ public class ExpertFinder {
 	 * @param topicName
 	 * @return
 	 */
-	public double getExpertise(String authorName, String topicName) {
+	public static double getExpertise(String authorName, String topicName) {
 		return ExpertiseModel.get().getExpertiseScore(authorName, topicName);
 	}
 	
 	/**
 	 * Calculates the given author's credibility or reputation wrt. the topic
-	 * represented by the given concept, based on the longevity on his/her
+	 * represented by the given concept, based on the longlevity on his/her
 	 * contributions to that topic, not including similar topics.
 	 * 
 	 * @param authorName
 	 * @param topicName
 	 * @return
 	 */
-	public double getReputation(String authorName, String topicName) {
+	public static double getReputation(String authorName, String topicName) {
 		return ExpertiseModel.get().getCredibility(authorName, topicName);
 	}
+		
 }
