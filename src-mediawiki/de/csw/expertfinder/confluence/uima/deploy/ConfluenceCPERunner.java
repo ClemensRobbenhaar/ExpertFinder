@@ -129,8 +129,13 @@ public class ConfluenceCPERunner {
         String pageId = documentList.nextPageId();
         collectionReader.setCurrentPageId(pageId);
 		
+        if (mCPE.getCasProcessors().length == 0) {
+            log.error("no processors found: exit");
+        }
+        
+        
         // (Re-)Start Processing
-        mCPE.process();		    
+        mCPE.process();	    
 		
 	}
 

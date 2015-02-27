@@ -49,7 +49,8 @@
     </casProcessors>
     <cpeConfig>
         <numToProcess>-1</numToProcess>
-        <deployAs>immediate</deployAs>
+        <!-- deployAs>immediate</deployAs -->
+        <deployAs>single-threaded</deployAs>
         <checkpoint batch="0" time="300000ms"/>
         <timerImpl/>
     </cpeConfig>
