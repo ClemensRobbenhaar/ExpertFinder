@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.jr.ob.JSON;
-
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Base64;
@@ -24,7 +22,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+
+import com.fasterxml.jackson.jr.ob.JSON;
 
 import com.espresto.util.URLEncoder;
 

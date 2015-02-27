@@ -242,7 +242,6 @@ public class ConfluenceCPERunner {
 	public static void main(String[] args) {
 		try {
 			Config.read(ConfluenceCPERunner.class.getResourceAsStream("/ExpertFinder.properties"));
-			// we do that later ...
 			OntologyIndex.get().load(OntologyIndex.class.getResource(Config.getAppProperty(Config.Key.ONTOLOGY_FILE)));
 			final ConfluenceCPERunner runner = new ConfluenceCPERunner(CPE_DESCRIPTOR_URL);
 			
