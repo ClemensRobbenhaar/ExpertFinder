@@ -67,12 +67,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/jena.jar" sourcepath="/Users/ralph/Java/SemanticWeb/Jena-2.5.7/src">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/Users/ralph/Java/SemanticWeb/Jena-2.5.7/doc/javadoc/"/>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/jenatest.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -251,5 +245,9 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jackson-jr-all-2.5.1.jar" sourcepath="lib/jackson-jr-all-2.5.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/jena-arq-2.10.1.jar"/>
+	<classpathentry kind="lib" path="lib/jena-core-2.10.1.jar"/>
+	<classpathentry kind="lib" path="lib/jena-iri-0.9.6.jar"/>
+	<classpathentry kind="lib" path="lib/jena-tdb-0.10.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
