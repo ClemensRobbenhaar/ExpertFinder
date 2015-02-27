@@ -209,22 +209,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/uima-core.jar">
+	<classpathentry kind="lib" path="lib/uima-core-2.6.0.jar" sourcepath="lib/uimaj-2.6.0-source-release.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/uima-cpe.jar">
+	<classpathentry kind="lib" path="lib/uima-cpe-2.6.0.jar" sourcepath="lib/uimaj-2.6.0-source-release.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/uima-document-annotation.jar">
+	<classpathentry kind="lib" path="lib/uima-document-annotation-2.6.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/uima-tools.jar">
+	<classpathentry kind="lib" path="lib/uima-tools-2.6.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
