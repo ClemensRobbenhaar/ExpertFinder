@@ -55,6 +55,7 @@ import de.csw.expertfinder.ontology.OntologyIndex;
  */
 public class ExpertFinder {
 	
+    @SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(ExpertFinder.class);
 
 	private ArrayList<String> topicLabelsSorted;
@@ -173,7 +174,7 @@ public class ExpertFinder {
 	 */
 	public List<String> getAvailableTopicLabels() {
 		if (applicationState != ApplicationState.INIT_DONE)
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		
 		if (topicLabelsSorted == null) {
 			Set<String> topicLabelsUnsorted = OntologyIndex.get().getAllConceptLabels();
