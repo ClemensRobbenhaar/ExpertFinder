@@ -26,8 +26,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`document` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -49,8 +49,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`author` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `author_name` (`name` ASC) )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -80,8 +80,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`revision` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -121,8 +121,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`section` (
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Stores subsections (subtopics) of Wikipedia articles';
 
 SHOW WARNINGS;
@@ -139,8 +139,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`concept` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `concept_uri` (`uri` ASC) )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -189,8 +189,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`word` (
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -218,8 +218,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`concept_similarity` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -248,8 +248,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`section_has_concept` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -276,8 +276,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`document_has_concept` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -295,7 +295,7 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`link` (
   `endPos` INT NOT NULL ,
   `id_revision_created` INT NULL ,
   `id_revision_deleted` INT NULL ,
-  `text` VARCHAR(255) CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NULL ,
+  `text` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_link_section1` (`id_source_section` ASC) ,
   INDEX `fk_link_section2` (`id_target_section` ASC) ,
@@ -322,8 +322,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`link` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -335,12 +335,12 @@ DROP TABLE IF EXISTS `expertfinder`.`category` ;
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `expertfinder`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(255) CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NOT NULL ,
+  `name` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `category_name` (`name` ASC) )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -382,8 +382,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`document_has_category` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -398,8 +398,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`application_data` (
   `value` VARCHAR(255) NULL ,
   PRIMARY KEY (`key`) )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -413,7 +413,13 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`author_has_credibility` (
   `id_author` INT NOT NULL ,
   `id_concept` INT NOT NULL ,
   `credibility` DOUBLE NULL ,
+  `credibility_all` DOUBLE NULL ,
+  `credibility_item_count` INT NULL ,
+  `credibility_item_count_all` INT NULL ,
   `expertise` DOUBLE NULL ,
+  `expertise_all` DOUBLE NULL ,
+  `expertise_item_count` INT NULL ,
+  `expertise_item_count_all` INT NULL ,
   PRIMARY KEY (`id_author`, `id_concept`) ,
   INDEX `fk_author_has_concept_author1` (`id_author` ASC) ,
   INDEX `fk_author_has_concept_concept1` (`id_concept` ASC) ,
@@ -429,8 +435,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`author_has_credibility` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
@@ -457,8 +463,8 @@ CREATE  TABLE IF NOT EXISTS `expertfinder`.`author_contributions` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_general_ci;
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 

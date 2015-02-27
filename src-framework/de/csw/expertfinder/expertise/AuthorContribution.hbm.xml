@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="de.csw.expertfinder.expertise">
-  <class name="AuthorContribution" table="author_contribution">
+  <class name="AuthorContribution" table="author_contributions">
     <composite-id>
   		<key-many-to-one name="author" column="id_author" lazy="false" />
   		<key-many-to-one name="concept" column="id_concept" lazy="false" />
