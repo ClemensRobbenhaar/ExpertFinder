@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="de.csw.expertfinder.document">
 
-  <class name="Word">
+  <class name="Word" table="word">
 
   	<id name="id" type="java.lang.Long">
   		<generator class="native" />
