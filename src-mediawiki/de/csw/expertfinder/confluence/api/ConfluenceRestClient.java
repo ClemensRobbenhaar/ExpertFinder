@@ -22,6 +22,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import com.fasterxml.jackson.jr.ob.JSON;
 
@@ -34,6 +36,8 @@ public class ConfluenceRestClient {
     private final String restApiBaseUrl;
     private String username;
     private String password;
+    
+    private boolean initialized;
 
     HttpClientConnection connection;
     private HttpClient http = new DefaultHttpClient();
@@ -47,9 +51,14 @@ public class ConfluenceRestClient {
 
     // after properties are set ... (?)
     public void initialize() {
-
+        HttpParams params = this.http.getParams();
+        // ToDo: make configureable (one day)
+        HttpConnectionParams.setConnectionTimeout(params, 1000);
+        HttpConnectionParams.setSoTimeout(params, 1000);
+        
+        initialized = true;
     }
-
+    
     public List<String> getAllSpaceKeys() {
         // note: we spare ourself the trouble of UrlTemplates
         Map<String, Object> spaceResult = fetchJsonResponse("/rest/api/space", null);
@@ -104,7 +113,12 @@ public class ConfluenceRestClient {
         return versions;
     }
 
-    
+    private void checkInitialized() {
+        if (!initialized) {
+            throw new RuntimeException("not initialized");
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private static List<String> extractResults(Map<String, Object> result, String attrName) {
         return extractResults(result, attrName, true);
@@ -126,6 +140,7 @@ public class ConfluenceRestClient {
 
     // ToDo: better JSON bindings ?
     private Map<String, Object> fetchJsonResponse(String restPath, BasicNameValuePair[] params) {
+        checkInitialized();
         try {
             StringBuilder url = new StringBuilder(restApiBaseUrl);
             url.append(restPath).append("?os_authType=basic&limit=1000");
@@ -188,6 +203,7 @@ public class ConfluenceRestClient {
         cl.setUsername("Admin");
         cl.setPassword("admin");
 
+        cl.initialize();
         System.out.println(cl.getAllSpaceKeys());
         System.out.println(cl.getAllPageIdsForSpace("ds").size());
         System.out.println(cl.getVersionsTextForPageId("819617"));

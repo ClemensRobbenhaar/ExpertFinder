@@ -93,12 +93,12 @@ public class PersistenceStoreFacade {
      * @param callback
      * @return whatever the callback returns
      */
-    // here we could use better generics
+    // here we should use better generics
     public static Object run(WithPersistence<? extends Object> callback) {
         PersistenceStoreFacade persistenceStore = get();
         try {
             persistenceStore.beginTransaction();
-            Object result = callback.execute(get());
+            Object result = callback.execute(persistenceStore);
             persistenceStore.commitChanges();
             return result;
         } catch (Exception e) {
@@ -107,7 +107,11 @@ public class PersistenceStoreFacade {
             } catch (Exception ie) {
                 log.warn("exception in rollback", ie);
             }
-            throw new RuntimeException(e);
+            if (e instanceof RuntimeException) {
+                throw (RuntimeException)e;
+            } else {
+                throw new RuntimeException(e);
+            }
         }
     }
 

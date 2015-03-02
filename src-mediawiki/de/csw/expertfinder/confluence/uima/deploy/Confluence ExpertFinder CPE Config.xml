@@ -24,7 +24,7 @@
     <casProcessors casPoolSize="3" processingUnitThreadCount="1">
         <casProcessor deployment="integrated" name="MediaWikiExpertFinderAEAggregate">
             <descriptor>
-                <import location="../../../../../../../desc/MediaWikiExpertFinderAEAggregate.xml"/>
+                <import location="../../../../../../../desc/confluence/ConfluenceExpertFinderAEAggregate.xml"/>
             </descriptor>
             <deploymentParameters/>
             <errorHandling>

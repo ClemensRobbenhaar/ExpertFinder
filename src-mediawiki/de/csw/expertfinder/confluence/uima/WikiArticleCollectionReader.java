@@ -64,6 +64,7 @@ public class WikiArticleCollectionReader extends CollectionReader_ImplBase {
         connector = new ConfluenceRestClient((String) getUimaContext().getConfigParameterValue("baseUrl"));
         connector.setUsername((String) getUimaContext().getConfigParameterValue("username"));
         connector.setPassword((String) getUimaContext().getConfigParameterValue("password"));
+        connector.initialize();
     }
 
     /// woha, uh, oh: callback *after* being initialized ... as we need the config first get the page ids ...
