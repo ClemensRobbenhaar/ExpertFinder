@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
+
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.util.URIref;
@@ -100,11 +102,7 @@ public class CategoryExtractor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			IOUtils.closeQuietly(in);
 		}
 		
 	}
