@@ -1,12 +1,9 @@
 package de.csw.expertfinder.confluence.uima.annotators;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -49,26 +46,71 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
             BLOCK_ELEMENTS = new HashSet<String>(Arrays.asList("p", "ul", "ol", "li"));
         }
 
-        final List<Section> sections = new ArrayList<Section>();
+        // final List<Section> sections = new ArrayList<Section>();
         private final Stack<Section> currentSections = new Stack<Section>();
 
+        private final JCas jCas;
         StringBuilder plainText = new StringBuilder();
 
         private StringBuilder currentHeadline = new StringBuilder();
         private boolean readingHeadline = false;
         private boolean lineBreakAdded = false;
 
-        SectionsExtractor(String titleText) {
+        SectionsExtractor(JCas jCas, String titleText) throws SAXException {
+            this.jCas = jCas;
+            if (!PLAINTEXT_VIEW.equals(jCas.getViewName())) {
+                throw new IllegalArgumentException("view must be plaintext, but is " + jCas.getViewName());
+            }
             startNewSection(0);
-            addTitle(titleText);
+            currentHeadline.append(titleText);
+            endSectionTitle(0);
+
             plainText.append(titleText).append("\n\n");
         }
 
-        // ToDo
-        private void startNewSection(int level) {
+        // we see a new headline and start a new section.
+        // if the previous section is of smaller level, it is the parent
+        private void startNewSection(int level) throws SAXException {
+            if (readingHeadline) {
+                throw new SAXException("nested headlines not supported");
+            }
+            readingHeadline = true;
+
+            final int currentLength = plainText.length();
+
+            Section newSection = new Section(jCas);
+            newSection.setLevel(level);
+            if (level > 0) {
+                newSection.setBegin(currentLength + 1); // we actually start *after* this section
+                // if our level is smaller or equal than the one on the stack,
+                // then we terminate the previous section and open a
+                // new higher level one.
+                while (level <= currentSections.peek().getLevel()) {
+                    Section terminated = currentSections.pop();
+                    terminated.setEnd(currentLength);
+                    terminated.addToIndexes();
+                }
+
+                // the section with the next larger level than ours is
+                // our parent
+                newSection.setParent(currentSections.peek());
+            } else {
+                newSection.setBegin(0);
+            }
+
+            currentSections.push(newSection);
         }
 
-        private void addTitle(String titleText) {
+        private void endSectionTitle(int level) throws SAXException {
+            if (!readingHeadline) {
+                throw new SAXException("closing headline which is not open");
+            }
+            readingHeadline = false;
+            if (level != currentSections.peek().getLevel()) {
+                throw new SAXException("wriong headline of level " + level);
+            }
+            currentSections.peek().setTitle(currentHeadline.toString().trim());
+            currentHeadline.setLength(0);
         }
 
         @Override
@@ -82,6 +124,10 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
                     break;
                 default:
                     plainText.append(ch);
+                    if (readingHeadline) {
+                        currentHeadline.append(ch);
+                    }
+                    break;
                 }
             }
         }
@@ -93,9 +139,6 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
             if (level != null) {
                 startNewSection(level);
                 plainText.append("\n");
-            } else {
-                // if (!lineEnded)
-                //plainText.append("<"+elementName+':'+qualifiedName+':' + fullUri+">");
             }
             lineBreakAdded = false;
         }
@@ -105,7 +148,7 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
             final String elementName = qualifiedName.toLowerCase();
             Integer level = TAG_TO_LEVEL.get(elementName);
             if (level != null) {
-                //endSection(level);
+                endSectionTitle(level);
                 plainText.append("\n\n");
             } else if (BLOCK_ELEMENTS.contains(elementName)) {
                 if (!lineBreakAdded) {
@@ -120,14 +163,17 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
 
         @Override
         public void startDocument() throws SAXException {
-            // TODO Auto-generated method stub
-            // super.startDocument();
+            // nothing really to do here
         }
 
         @Override
         public void endDocument() throws SAXException {
-            // TODO Auto-generated method stub
-            // super.endDocument();
+            int endOfPage = plainText.length();
+            while (!currentSections.isEmpty()) {
+                Section section = currentSections.pop();
+                section.setEnd(endOfPage);
+                section.addToIndexes();
+            }
         }
 
     }
@@ -160,39 +206,29 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
         AnnotationIndex<Annotation> articleRevisionInfoIndex = jCas.getAnnotationIndex(ArticleRevisionInfo.type);
         ArticleRevisionInfo articleRevisionInfo = (ArticleRevisionInfo) articleRevisionInfoIndex.iterator().next();
 
-        final InputStream xmlStream;
-
-        final SectionsExtractor extractor = new SectionsExtractor(articleRevisionInfo.getTitle());
-
         try {
+            // create the plain text view
+            CAS plainTextView = cas.createView(PLAINTEXT_VIEW);
+
+            final SectionsExtractor extractor = new SectionsExtractor(plainTextView.getJCas(), articleRevisionInfo.getTitle());
             // FIXME: we only got a fragment ...  can be done better !
             String documentTextNoFrament = "<body>" + documentText + "</body>";
-            xmlStream = IOUtils.toInputStream(documentTextNoFrament, "UTF-8");
+            final InputStream xmlStream = IOUtils.toInputStream(documentTextNoFrament, "UTF-8");
 
             SAXParser parser = parserFactory.newSAXParser();
             parser.parse(xmlStream, extractor);
 
+            plainTextView.setDocumentText(extractor.plainText.toString());
+
+            // XXX: is this the proper way to get the initial view ?
+            plainTextView.setDocumentLanguage(cas.getView("_InitialView").getDocumentLanguage());
+
             // duh, we are in 1.6 here:
             //        } catch (IOException|SAXException e) {
+
         } catch (Exception e) {
             throw new AnalysisEngineProcessException(e);
         }
-
-        // read with proper handler:
-        /*DetagPlainTextHandler handler = new DetagPlainTextHandler();
-        try {
-          SAXParser parser = parserFactory.newSAXParser();
-          parser.parse(xmlStream, handler);
-        } catch (Exception e) {
-          throw new AnalysisEngineProcessException(e);
-        }*/
-
-        // create the plain text view and set its document text
-        CAS plainTextView = cas.createView(PLAINTEXT_VIEW);
-        plainTextView.setDocumentText(extractor.plainText.toString());
-
-        // XXX: is this the proper way to get the initial view ?
-        plainTextView.setDocumentLanguage(cas.getView("_InitialView").getDocumentLanguage());
 
     }
 

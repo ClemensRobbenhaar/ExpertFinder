@@ -88,7 +88,7 @@ public class ConfluenceRestClient {
     
     @SuppressWarnings("unchecked")
     public List<ConfluencePageVersionInfo> getVersionsInfoForPageId(String pageId, long lastKnownRevision) {
-        // FIXME: lastKnownVersion is unknown
+        // FIXME: lastKnownVersion is unused
         // ToDo: we have no official way to get at version ... see above
         Map<String, Object> versionData = fetchJsonResponse("/rest/semanticresource/1.0/versions/" + URLEncoder.encode(pageId), null);
         
@@ -105,8 +105,10 @@ public class ConfluenceRestClient {
             info.setTimestamp( new Date( (Long)oneVersion.get("lastModified") ));
             
             info.setComment( (String)oneVersion.get("comment") );
-            info.setText( (String)oneVersion.get("plainContent") );
             info.setTitle( (String)oneVersion.get("title") );
+
+            //info.setText( (String)oneVersion.get("plainContent") );
+            info.setText( (String)oneVersion.get("content") );
                         
             versions.add(info);
         }
