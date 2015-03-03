@@ -34,7 +34,7 @@
         </configurationParameters>
         <configurationParameterSettings />
         <typeSystemDescription>
-            <imports><!--  we can reuse the media wiki document here -->
+            <imports><!-- we can reuse the media wiki document here -->
                 <import
                     location="../MediaWikiArticleDocumentAnnotationTypeSystem.xml" />
             </imports>

@@ -33,6 +33,11 @@
                 <timeout max="100000" default="-1"/>
             </errorHandling>
             <checkpoint batch="10000" time="1000ms"/>
+            <sofaNameMappings>
+              <sofaNameMapping componentSofaName="plaintext"
+                                     cpeSofaName="plaintext" />
+            </sofaNameMappings>
+            
         </casProcessor>
         <casProcessor deployment="integrated" name="ExpertFinderConsumerDescriptor">
             <descriptor>
@@ -45,6 +50,10 @@
                 <timeout max="100000" default="-1"/>
             </errorHandling>
             <checkpoint batch="10000" time="1000ms"/>
+            <sofaNameMappings>
+              <sofaNameMapping componentSofaName="_InitialView"
+                               cpeSofaName="plainTextView"/>
+            </sofaNameMappings>
         </casProcessor>
     </casProcessors>
     <cpeConfig>

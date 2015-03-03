@@ -1,5 +1,10 @@
 package de.csw.expertfinder.test.confluence;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,8 +14,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.junit.Assert;
+import org.apache.uima.resource.metadata.impl.Capability_impl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -60,19 +66,29 @@ public class TestConfluenceSectionDetector {
     @Test
     public void testSimple() throws UIMAException, IOException {
 
-        String text = read("input.html");
-        jCas.setDocumentText(text);
-        buildVersionInfo("input.version");
-
         AnalysisEngine sectionDetectedAnnotatorAE = AnalysisEngineFactory.createPrimitive(ConfluenceSectionDetector.class, typeSystemDescription);
+        
+        Capability io = new Capability_impl();
+        io.setInputSofas( new String[] { "html" } );
+        io.setOutputSofas( new String[] { "plaintext" } );
+        Capability[] aCapabilities = new Capability[] { io };
+        
+        sectionDetectedAnnotatorAE.getAnalysisEngineMetaData().setCapabilities(aCapabilities);        
+        assertTrue(sectionDetectedAnnotatorAE.getAnalysisEngineMetaData().isSofaAware());
+
+        JCas htmlView = jCas.createView("html");
+        String text = read("input.html");
+        htmlView.setDocumentText(text);
+        buildVersionInfo("input.version",htmlView);
+
         sectionDetectedAnnotatorAE.process(jCas);
 
         JCas plainText = JCasUtil.getView(jCas, ConfluenceSectionDetector.PLAINTEXT_VIEW, false);
-        Assert.assertNotNull("should have a plain text after processing", plainText);
+        assertNotNull("should have a plain text after processing", plainText);
 
-        Assert.assertEquals(read("output.txt"), plainText.getDocumentText());
+        assertEquals(read("output.txt"), plainText.getDocumentText());
 
-        Assert.assertEquals("should have no sections in the default, view", 0, JCasUtil.select(jCas, Section.class).size());
+        assertEquals("should have no sections in the default, view", 0, JCasUtil.select(jCas, Section.class).size());
 
         assertEqualsSections(readSections("output.sections"), JCasUtil.select(plainText, Section.class), plainText.getDocumentText());
     }
@@ -81,21 +97,21 @@ public class TestConfluenceSectionDetector {
         int i = 0;
         for (Section actualSection : actualSections) {
             if (expectedSections.size() <= i) {
-                Assert.fail("unexpected extra sections from " + i + " found " + actualSection.getLevel());
+                fail("unexpected extra sections from " + i + " found " + actualSection.getLevel());
             }
             ExpectedSection expectedSection = expectedSections.get(i);
             //  Section actualSection = JCasUtil.selectByIndex(jCas, Section.class, i);
-            Assert.assertEquals("for the " + i + ". section", expectedSection.title, actualSection.getTitle());
-            Assert.assertEquals("for the " + i + ". section", expectedSection.level, actualSection.getLevel());
+            assertEquals("for the " + i + ". section", expectedSection.title, actualSection.getTitle());
+            assertEquals("for the " + i + ". section", expectedSection.level, actualSection.getLevel());
 
-            Assert.assertEquals("should have body ", inText.substring(actualSection.getBegin(), actualSection.getEnd()), actualSection.getCoveredText());
-            Assert.assertTrue(
+            assertEquals("should have body ", inText.substring(actualSection.getBegin(), actualSection.getEnd()), actualSection.getCoveredText());
+            assertTrue(
                     String.format("should have body starting with [%s] but got [%s]", expectedSection.title,
                             actualSection.getCoveredText().substring(0, expectedSection.title.length())),
                     actualSection.getCoveredText().startsWith(expectedSection.title));
             i++;
         }
-        Assert.assertEquals("should have found all expected sections", expectedSections.size(), i);
+        assertEquals("should have found all expected sections", expectedSections.size(), i);
     }
 
     private List<ExpectedSection> readSections(String resourceName) throws IOException {
@@ -114,11 +130,11 @@ public class TestConfluenceSectionDetector {
         return sections;
     }
 
-    private ArticleRevisionInfo buildVersionInfo(String resourceName) throws IOException {
+    private ArticleRevisionInfo buildVersionInfo(String resourceName, JCas view) throws IOException {
         @SuppressWarnings("unchecked")
         List<String> lines = IOUtils.readLines(getClass().getResourceAsStream(resourceName));
 
-        ArticleRevisionInfo version = new ArticleRevisionInfo(jCas);
+        ArticleRevisionInfo version = new ArticleRevisionInfo(view);
 
         version.setTitle(lines.get(0));
         version.setAuthorName(lines.get(1));

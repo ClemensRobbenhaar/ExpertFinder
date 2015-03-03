@@ -2,7 +2,7 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
 <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
 <primitive>true</primitive>
-<annotatorImplementationName>de.csw.expertfinder.confluence.uima.ConfluenceSectionDetector</annotatorImplementationName>
+<annotatorImplementationName>de.csw.expertfinder.confluence.uima.annotators.ConfluenceSectionDetector</annotatorImplementationName>
 <analysisEngineMetaData>
 <name>ConfluenceSectionDetector</name>
 <description></description>
@@ -21,12 +21,18 @@
 <capability>
 <inputs/>
 <outputs/>
+    <inputSofas>
+      <sofaName>html</sofaName>
+    </inputSofas>
+    <outputSofas>
+      <sofaName>plaintext</sofaName>
+    </outputSofas>
 <languagesSupported/>
 </capability>
 </capabilities>
 <operationalProperties>
 <modifiesCas>true</modifiesCas>
-<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+<multipleDeploymentAllowed>false</multipleDeploymentAllowed>
 <outputsNewCASes>true</outputsNewCASes>
 </operationalProperties>
 </analysisEngineMetaData>

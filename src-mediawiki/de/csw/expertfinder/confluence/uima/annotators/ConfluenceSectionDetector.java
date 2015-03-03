@@ -1,6 +1,8 @@
 package de.csw.expertfinder.confluence.uima.annotators;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,19 +10,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+//import javax.xml.parsers.SAXParser;
+//import javax.xml.parsers.SAXParserFactory;
+import org.cyberneko.html.parsers.SAXParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
+import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.text.AnnotationIndex;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -30,6 +34,13 @@ import de.csw.expertfinder.mediawiki.uima.types.markup.Section;
 public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
 
     public static class SectionsExtractor extends DefaultHandler {
+
+        @Override
+        public InputSource resolveEntity(String publicId, String systemId) throws IOException, SAXException {
+            System.err.println("asked to resolve " + publicId + " and " + systemId);
+            final String fake = "<!ENTITY nbsp \" \">";
+            return new InputSource(new java.io.StringReader(fake));
+        }
 
         final static Map<String, Integer> TAG_TO_LEVEL;
         final static Set<String> BLOCK_ELEMENTS;
@@ -58,9 +69,9 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
 
         SectionsExtractor(JCas jCas, String titleText) throws SAXException {
             this.jCas = jCas;
-            if (!PLAINTEXT_VIEW.equals(jCas.getViewName())) {
-                throw new IllegalArgumentException("view must be plaintext, but is " + jCas.getViewName());
-            }
+            //if (!PLAINTEXT_VIEW.equals(jCas.getViewName())) {
+            //    throw new IllegalArgumentException("view must be plaintext, but is " + jCas.getViewName());
+            //}
             startNewSection(0);
             currentHeadline.append(titleText);
             endSectionTitle(0);
@@ -178,17 +189,19 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
 
     }
 
+    public static String HTML_VIEW = "html";
     public static String PLAINTEXT_VIEW = "plaintext";
 
-    private SAXParserFactory parserFactory;
+    //private SAXParserFactory parserFactory;
 
     public ConfluenceSectionDetector() {
     }
 
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        parserFactory = SAXParserFactory.newInstance();
-        parserFactory.setNamespaceAware(false);
+
+        //parserFactory = SAXParserFactory.newInstance();
+        // parserFactory.setNamespaceAware(false);
 
         // here set parser properties: ...
 
@@ -200,31 +213,55 @@ public class ConfluenceSectionDetector extends JCasAnnotator_ImplBase {
     @Override
     public void process(JCas jCas) throws AnalysisEngineProcessException {
 
-        CAS cas = jCas.getCas();
-        String documentText = jCas.getDocumentText();
+        JCas htmlCas;
+        try {
+            htmlCas = jCas.getView(HTML_VIEW);
+        } catch (CASException e) {
+            throw new AnalysisEngineProcessException(e);
+        }
 
-        AnnotationIndex<Annotation> articleRevisionInfoIndex = jCas.getAnnotationIndex(ArticleRevisionInfo.type);
+        String documentText = htmlCas.getDocumentText();
+
+        // System.err.println("jCAS: " + jCas.getViewName());
+        //System.err.println("CAS: " + cas.getViewName());
+
+        AnnotationIndex<Annotation> articleRevisionInfoIndex = htmlCas.getAnnotationIndex(ArticleRevisionInfo.type);
         ArticleRevisionInfo articleRevisionInfo = (ArticleRevisionInfo) articleRevisionInfoIndex.iterator().next();
 
         try {
             // create the plain text view
-            CAS plainTextView = cas.createView(PLAINTEXT_VIEW);
+            CAS plainTextView = htmlCas.getCas().createView(PLAINTEXT_VIEW);
 
             final SectionsExtractor extractor = new SectionsExtractor(plainTextView.getJCas(), articleRevisionInfo.getTitle());
-            // FIXME: we only got a fragment ...  can be done better !
-            String documentTextNoFrament = "<body>" + documentText + "</body>";
-            final InputStream xmlStream = IOUtils.toInputStream(documentTextNoFrament, "UTF-8");
+            // FIXME: we only got a fragment ...  this can be done better !
+            // String documentTextNoFrament = "<body>" + documentText + "</body>";
+            // final InputStream xmlStream = IOUtils.toInputStream(documentTextNoFrament, "UTF-8");
 
-            SAXParser parser = parserFactory.newSAXParser();
-            parser.parse(xmlStream, extractor);
+            // SAXParser parser = parserFactory.newSAXParser();
+            SAXParser parser = new SAXParser();
+            parser.setContentHandler(extractor);
+
+            // parser.setFeature("http://cyberneko.org/html/features/override-namespaces", false);
+            parser.setFeature("http://cyberneko.org/html/features/balance-tags", true);
+
+            InputSource src = new InputSource(new StringReader(documentText));
+
+            parser.parse(src);
 
             plainTextView.setDocumentText(extractor.plainText.toString());
 
-            // XXX: is this the proper way to get the initial view ?
-            plainTextView.setDocumentLanguage(cas.getView("_InitialView").getDocumentLanguage());
+            plainTextView.setDocumentLanguage(htmlCas.getCas().getDocumentLanguage());
 
-            // duh, we are in 1.6 here:
-            //        } catch (IOException|SAXException e) {
+            //XXX: bad bad hack - copy over the articleRevisionInfo, instead of having this attached to the "global" CAS
+            // just because the consumer only looks into one cas ...
+            JCas plainTextViewJCas = plainTextView.getJCas();
+            ArticleRevisionInfo articleRevisionInfoCopy = new ArticleRevisionInfo(plainTextViewJCas);
+            articleRevisionInfoCopy.setAuthorName(articleRevisionInfo.getAuthorName());
+            articleRevisionInfoCopy.setArticleId(articleRevisionInfo.getArticleId());
+            articleRevisionInfoCopy.setRevisionId(articleRevisionInfo.getRevisionId());
+            articleRevisionInfoCopy.setTitle(articleRevisionInfo.getTitle());
+            articleRevisionInfoCopy.setTimestamp(articleRevisionInfo.getTimestamp());
+            articleRevisionInfoCopy.addToIndexes();
 
         } catch (Exception e) {
             throw new AnalysisEngineProcessException(e);

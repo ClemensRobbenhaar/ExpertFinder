@@ -4,7 +4,7 @@
 <primitive>false</primitive>
 <delegateAnalysisEngineSpecifiers>
 <delegateAnalysisEngine key="ConfluenceSectionDetector">
-<import location="ConfluenceSectionDetector"/>
+<import location="ConfluenceSectionDetector.xml"/>
 </delegateAnalysisEngine>
 <!-- 
 <delegateAnalysisEngine key="GATERegexSentenceSplitter">
@@ -49,14 +49,32 @@
 <outputs>
 <type allAnnotatorFeatures="true">de.csw.expertfinder.mediawiki.uima.types.ArticleRevisionInfo</type>
 </outputs>
+    <inputSofas>
+      <sofaName>_InitialView</sofaName>
+    </inputSofas>
+    <outputSofas>
+      <sofaName>plainTextView</sofaName>
+    </outputSofas>
 <languagesSupported/>
 </capability>
 </capabilities>
 <operationalProperties>
 <modifiesCas>true</modifiesCas>
-<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-<outputsNewCASes>false</outputsNewCASes>
+<multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+<outputsNewCASes>true</outputsNewCASes>
 </operationalProperties>
 </analysisEngineMetaData>
 <resourceManagerConfiguration/>
+<sofaMappings>
+  <sofaMapping>
+    <componentKey>ConfluenceSectionDetector</componentKey>
+    <componentSofaName>html</componentSofaName>
+    <aggregateSofaName>_InitialView</aggregateSofaName>
+  </sofaMapping>
+  <sofaMapping>
+    <componentKey>ConfluenceSectionDetector</componentKey>
+    <componentSofaName>plaintext</componentSofaName>
+    <aggregateSofaName>plainTextView</aggregateSofaName>
+  </sofaMapping>
+</sofaMappings>
 </analysisEngineDescription>
