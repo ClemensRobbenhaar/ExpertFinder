@@ -93,12 +93,11 @@ public class PersistenceStoreFacade {
      * @param callback
      * @return whatever the callback returns
      */
-    // here we should use better generics
-    public static Object run(WithPersistence<? extends Object> callback) {
+    public static <T> T run(WithPersistence<T> callback) {
         PersistenceStoreFacade persistenceStore = get();
         try {
             persistenceStore.beginTransaction();
-            Object result = callback.execute(persistenceStore);
+            T result = callback.execute(persistenceStore);
             persistenceStore.commitChanges();
             return result;
         } catch (Exception e) {
