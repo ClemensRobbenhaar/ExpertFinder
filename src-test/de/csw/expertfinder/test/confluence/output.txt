@@ -1,0 +1,28 @@
+The Title of the Test
+
+Text Introduction - topmost section
+
+Section 1.1
+
+Test of section 1.1
+
+Section 1.1.1
+
+we have an enumeration here:
+  first line
+  second line
+
+Section level 3
+
+text level 3
+
+Section 1.1.2
+
+
+Section 1.1.2.0.1
+
+We jumped over a section level here
+
+Section 2
+
+Assuming h1 is used as top level

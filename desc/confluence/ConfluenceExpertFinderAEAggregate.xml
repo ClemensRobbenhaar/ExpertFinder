@@ -3,6 +3,9 @@
 <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
 <primitive>false</primitive>
 <delegateAnalysisEngineSpecifiers>
+<delegateAnalysisEngine key="ConfluenceSectionDetector">
+<import location="ConfluenceSectionDetector"/>
+</delegateAnalysisEngine>
 <!-- 
 <delegateAnalysisEngine key="GATERegexSentenceSplitter">
 <import location="GATERegexSentenceSplitter.xml"/>
@@ -27,6 +30,7 @@
 <configurationParameterSettings/>
 <flowConstraints>
 <fixedFlow>
+<node>ConfluenceSectionDetector</node>
 <!--
 <node>GATERegexSentenceSplitter</node>
 <node>EnglishTokenizer</node>

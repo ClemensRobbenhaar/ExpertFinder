@@ -1,0 +1,11 @@
+from https://code.google.com/p/uimafit/downloads/list
+  "uimafit-1.4.0-plus-dependencies.zip"
+contains:
+- aopalliance-1.0.jar
+- jVinci-2.4.0.jar
+- spring-beans-3.1.0.RELEASE.jar
+- spring-context-3.1.0.RELEASE.jar
+- spring-core-3.1.0.RELEASE.jar
+- uimafit-1.4.0.jar
+- uimafit-1.4.0-sources.jar
+- uimaj-adapter-vinci-2.4.0.jar
