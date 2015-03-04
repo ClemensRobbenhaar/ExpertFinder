@@ -6,6 +6,12 @@
 <delegateAnalysisEngine key="ConfluenceSectionDetector">
 <import location="ConfluenceSectionDetector.xml"/>
 </delegateAnalysisEngine>
+<delegateAnalysisEngine key="SimpleSentenceSplitter">
+<import location="SimpleSentenceSplitter.xml"/>
+</delegateAnalysisEngine>
+<delegateAnalysisEngine key="GermanStemmer">
+<import location="../GermanStemmer.xml"/>
+</delegateAnalysisEngine>
 <!-- 
 <delegateAnalysisEngine key="GATERegexSentenceSplitter">
 <import location="GATERegexSentenceSplitter.xml"/>
@@ -31,6 +37,8 @@
 <flowConstraints>
 <fixedFlow>
 <node>ConfluenceSectionDetector</node>
+<node>SimpleSentenceSplitter</node>
+<node>GermanStemmer</node>
 <!--
 <node>GATERegexSentenceSplitter</node>
 <node>EnglishTokenizer</node>
@@ -48,6 +56,10 @@
 </inputs>
 <outputs>
 <type allAnnotatorFeatures="true">de.csw.expertfinder.mediawiki.uima.types.ArticleRevisionInfo</type>
+<type allAnnotatorFeatures="true">de.csw.expertfinder.mediawiki.uima.types.markup.Section</type>
+<type allAnnotatorFeatures="true">de.csw.expertfinder.uima.types.Sentence</type>
+<type allAnnotatorFeatures="true">de.csw.expertfinder.uima.types.Word</type>
+<type allAnnotatorFeatures="true">de.csw.expertfinder.uima.types.Noun</type>
 </outputs>
     <inputSofas>
       <sofaName>_InitialView</sofaName>
@@ -74,6 +86,16 @@
   <sofaMapping>
     <componentKey>ConfluenceSectionDetector</componentKey>
     <componentSofaName>plaintext</componentSofaName>
+    <aggregateSofaName>plainTextView</aggregateSofaName>
+  </sofaMapping>
+  <sofaMapping>
+    <componentKey>SimpleSentenceSplitter</componentKey>
+    <componentSofaName>_InitialView</componentSofaName>
+    <aggregateSofaName>plainTextView</aggregateSofaName>
+  </sofaMapping>
+  <sofaMapping>
+    <componentKey>GermanStemmer</componentKey>
+    <componentSofaName>_InitialView</componentSofaName>
     <aggregateSofaName>plainTextView</aggregateSofaName>
   </sofaMapping>
 </sofaMappings>

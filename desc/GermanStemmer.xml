@@ -43,7 +43,7 @@
 <nameValuePair>
 <name>filePath</name>
 <value>
-<string>/Users/ralph/uima_workspace/openthesaurus/www/admin/stopwords_de.txt</string>
+<string>/wordlists/stopWords_de</string>
 </value>
 </nameValuePair>
 </settingsForGroup>

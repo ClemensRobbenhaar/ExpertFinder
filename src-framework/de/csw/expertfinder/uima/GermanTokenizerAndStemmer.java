@@ -29,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -100,6 +101,7 @@ public class GermanTokenizerAndStemmer extends JCasAnnotator_ImplBase {
 		String dbUser = (String) context.getConfigParameterValue(CONFIG_PARAM_GROUP_DB, CONFIG_PARAM_DB_USER);
 		String dbPassword = (String) context.getConfigParameterValue(CONFIG_PARAM_GROUP_DB, CONFIG_PARAM_DB_PASSWORD);
 		
+		/*
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPassword);
@@ -112,15 +114,18 @@ public class GermanTokenizerAndStemmer extends JCasAnnotator_ImplBase {
 			log.fatal("No mysql jdbc driver in the classpath", e);
 			throw new ResourceInitializationException(e);
 		} catch (SQLException e) {
-			log.fatal("Could not establish DB connection", e);
+			log.fatal("Could not establish DB connection " + dbURL, e);
 			throw new ResourceInitializationException(e);
 		}
-
+*/
+		
 		String stopWordListPath = (String) context.getConfigParameterValue(CONFIG_PARAM_GROUP_STOPWORDS, STOPWORD_LIST_PATH);
 		File stopWordListFile = new File(stopWordListPath);
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(stopWordListFile));
+		    log.info("opening "+ stopWordListPath);
+		    // IOUtils.readLines( this.getClass().getResourceAsStream(stopWordListPath))
+			in = new BufferedReader(new InputStreamReader( this.getClass().getResourceAsStream(stopWordListPath), "utf-8")); // FileReader(stopWordListFile));
 			String line = null;
 			while((line = in.readLine()) != null) {
 				stopwords.add(line.trim().toLowerCase());
@@ -154,6 +159,7 @@ public class GermanTokenizerAndStemmer extends JCasAnnotator_ImplBase {
 		AnnotationIndex sentenceIndex = cas.getAnnotationIndex(Sentence.type);
 		FSIterator sentenceIterator = sentenceIndex.iterator();
 		int currentSentenceEnd = 0;
+		Sentence currentSentence = null;
 		Matcher matcher = wordPattern.matcher(text);
 		boolean firstWordInSentence = true;
 		while (matcher.find()) {
@@ -162,7 +168,8 @@ public class GermanTokenizerAndStemmer extends JCasAnnotator_ImplBase {
 			if (end > currentSentenceEnd) {
 				// we have reached the next sentence
 				if (sentenceIterator.hasNext()) {
-					currentSentenceEnd = ((Sentence)sentenceIterator.next()).getEnd();
+				    currentSentence = (Sentence)sentenceIterator.next();
+					currentSentenceEnd = currentSentence.getEnd();
 					firstWordInSentence = true;
 				}
 			} else {
@@ -188,10 +195,15 @@ public class GermanTokenizerAndStemmer extends JCasAnnotator_ImplBase {
 //					}
 					if (!firstWordInSentence) {
 						isNoun = true;
+						//nounCache.add(wordStem);
+						if (nounCache.add(wordStem) /*wordStem.equalsIgnoreCase("da")*/) {
+						    //log.info(String.format("#### add noun ? %s (%s) in %s ", word,  wordStem, ((currentSentence!=null)?currentSentence.getCoveredText():"-") ) ) ;
+						}
 					}
 				}
 			}
 			Word annotation = isNoun ? new Noun(cas, start, end) : new Word(cas, start, matcher.end());
+			annotation.setLemma( wordStem); // FIXME: lemmatizer wanted
 			annotation.setWordStem(wordStem);
 			annotation.addToIndexes();
 		}
