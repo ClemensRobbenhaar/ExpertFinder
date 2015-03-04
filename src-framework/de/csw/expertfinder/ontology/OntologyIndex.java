@@ -27,7 +27,7 @@ package de.csw.expertfinder.ontology;
 
 import static de.csw.expertfinder.config.Config.Key.LANGUAGE;
 import static de.csw.expertfinder.config.Config.Key.ONTOLOGY_BASE_CONCEPT_URI;
-import static de.csw.expertfinder.config.Config.Key.ONTOLOGY_FILE;
+// import static de.csw.expertfinder.config.Config.Key.ONTOLOGY_FILE;
 import static de.csw.expertfinder.config.Config.Key.ONTOLOGY_INDEX_COMPOUND_TERMS;
 import static de.csw.expertfinder.config.Config.Key.ONTOLOGY_SIMILARITY_MEASURE;
 import static de.csw.expertfinder.config.Config.Key.STOPWORDS_FILEPATH;
@@ -109,7 +109,9 @@ public class OntologyIndex {
 	private static OntologyIndex instance;
 	
 	/** Stemmer to get discriminators from a term. By default it is a GermanStemmer */
-	private Stemmer stemmer;
+	//private Stemmer stemmer;
+    private org.apache.lucene.analysis.de.GermanStemmer stemmer; 
+
 
 	/** Index for mapping labels (in its stemmed version) to concepts of the ontology. */
 	// TODO encapsulate in a separate class
@@ -152,8 +154,18 @@ public class OntologyIndex {
 		
 		classesByStemmedLabels = new HashMap<String,OntClass>();
 		
-		stemmer = new DefaultStemmer();
-		
+	     
+		// XXX: language is not configureable, not really
+		if (!"de".equals(Config.getAppProperty(LANGUAGE))) {
+		    throw new IllegalStateException("configured for de");
+		}
+        stemmer = new org.apache.lucene.analysis.de.GermanStemmer();
+
+        //if (!"en".equals(Config.getAppProperty(LANGUAGE))) {
+        //    throw new IllegalStateException("configured for de");
+        //}
+		// stemmer = new DefaultStemmer();
+
 		
 		// read stop word list
 		String stopWordListPath = Config.getAppProperty(STOPWORDS_FILEPATH);
@@ -163,7 +175,7 @@ public class OntologyIndex {
 			URL stopWordListURL = OntologyIndex.class.getResource(stopWordListPath);
 			BufferedReader in = null;
 			try {
-				in = new BufferedReader(new InputStreamReader(stopWordListURL.openStream()));
+				in = new BufferedReader(new InputStreamReader(stopWordListURL.openStream(), "UTF-8"));
 				String line = null;
 				while ((line = in.readLine()) != null) {
 					stopwords.add(line.trim().toLowerCase());
@@ -245,9 +257,9 @@ public class OntologyIndex {
 	/**
 	 * @return the stemmer used in the index
 	 */
-	public Stemmer getStemmer() {
-		return stemmer;
-	}
+	//public Stemmer getStemmer() {
+	//	return stemmer;
+//	}
 	
 	/**
 	 * Tries to find an ontology class for a given label. Since labels can consist of compound words, it returns the OntClass with the longest matching subsequence or null, if no subsequence matches.
@@ -591,7 +603,7 @@ public class OntologyIndex {
 			log.info("Creating concept label index");
 			createIndex();
 			
-			String ontologyFile = Config.getAppProperty(ONTOLOGY_FILE);
+			// String ontologyFile = Config.getAppProperty(ONTOLOGY_FILE);
 			String baseConcept = Config.getAppProperty(ONTOLOGY_BASE_CONCEPT_URI);
 			String nsPrefix = model.getNsPrefixURI("");
 			
@@ -633,16 +645,18 @@ public class OntologyIndex {
 		
 		allConceptLabels = new HashMap<String, OntClass>();
 		
-		ExtendedIterator iter = model.listClasses();
+		ExtendedIterator<OntClass> iter = model.listClasses();
 		while (iter.hasNext()) {
-			OntClass ontClass = (OntClass)iter.next();
+			OntClass ontClass = iter.next();
 			
 //			if (ontClass.hasLiteral(invisible, true))
 //				continue;
 			
 			if (!ontClass.isAnon()) {
 				// get all labels in the appropriate language
-				ExtendedIterator labelIter = ontClass.listLabels(Config.getAppProperty(LANGUAGE));
+			    // TODO: allow to use labels in all languages, or language dependent "indexes"
+				ExtendedIterator<RDFNode> labelIter = ontClass.listLabels(Config.getAppProperty(LANGUAGE));
+                // ExtendedIterator<RDFNode> labelIter = ontClass.listLabels(null);
 				while (labelIter.hasNext()) {
 					String label = ((Literal)labelIter.next()).getString().toLowerCase();
 					
@@ -657,7 +671,7 @@ public class OntologyIndex {
 						if (stopwords.contains(labelWord)) {
 							continue;
 						}
-						stemmedLabelBuf.append(stemmer.stem(labelWord));
+						stemmedLabelBuf.append(stemmer.stem(labelWord)); // here we would need to have the right stemmer ...
 						stemmedLabelBuf.append(PREFIX_SEPARATOR);
 					}
 					

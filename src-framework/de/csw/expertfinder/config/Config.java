@@ -58,7 +58,7 @@ public class Config {
 	public enum Key {
 		
 		/** The type of the target wiki (currently, only MediaWiki is supported) */
-		WIKI_TYPE("wiki.type", String.class, true, "MediaWiki"),
+		// WIKI_TYPE("wiki.type", String.class, true, "MediaWiki"),
 		
 		/** The URL of the target wiki's API */
 		WIKI_MEDIAWIKI_API ("wiki.mediawiki.api", String.class, true),
@@ -73,10 +73,10 @@ public class Config {
 		ONTOLOGY_BASE_CONCEPT_URI ("ontology.baseconceptURI", String.class, true),
 		
 		/** uri of the base concept of the domain sub model in the ontology */
-		ONTOLOGY_DOMAIN_BASE_CONCEPT_URI ("ontology.domain.baseconceptURI", String.class, true),
+		// ONTOLOGY_DOMAIN_BASE_CONCEPT_URI ("ontology.domain.baseconceptURI", String.class, true),
 		
 		/** uri of the base concept of the problem sub model in the ontology */
-		ONTOLOGY_DOMAIN_BASE_PROBLEM_URI ("ontology.problem.baseconceptURI", String.class, true),
+		// ONTOLOGY_DOMAIN_BASE_PROBLEM_URI ("ontology.problem.baseconceptURI", String.class, true),
 		
 		/** Semantic similarity measure */
 		ONTOLOGY_SIMILARITY_MEASURE ("ontology.similarity.measure", String.class, true, "simpack.measure.graph.ConceptualSimilarity"),
@@ -95,7 +95,8 @@ public class Config {
 		 * analyzed (pos tagged and matched to ontology concepts) or not. If not,
 		 * only category names, document titles and section titles are analyzed. 
 		 */
-		ANALYSE_ALL_WORDS ("analyzer.tagallwords", Boolean.class, true, false),
+		// TODO: this is not implemented, and is always true
+		// ANALYSE_ALL_WORDS ("analyzer.tagallwords", Boolean.class, true, false),
 
 		/** The minimum similarity between two topic classes such that they are still deemed similar. */
 		ONTOLOGY_MIN_TOPIC_SIMILARITY ("ontology.minTopicSimilarity", Double.class, true, .5),
@@ -105,34 +106,36 @@ public class Config {
 		CREDIBILITY_BASE ("credibility.base", Double.class, true, 1.5),
 		
 		/** The db url to the OpenThesaurus database (for german wikis) */
-		OPENTHESAURUS_DB_URL ("openthesaurus.db.url", String.class, false),
+		// unusedm for now ...
+		// OPENTHESAURUS_DB_URL ("openthesaurus.db.url", String.class, false),
 		
 		/** User for the OpenThesaurus database (for german wikis) */
-		OPENTHESAURUS_DB_USER ("openthesaurus.db.user", String.class, false),
+		//OPENTHESAURUS_DB_USER ("openthesaurus.db.user", String.class, false),
 
 		/** Password for the OpenThesaurus database (for german wikis) */
-		OPENTHESAURUS_DB_PASSWORD ("openthesaurus.db.password", String.class, false),
+		//OPENTHESAURUS_DB_PASSWORD ("openthesaurus.db.password", String.class, false),
 		
 		/** Classpath relative path to the wordnet dictionary */
-		WORDNET_DATA_DIR ("wordnet.dictionaryDir", String.class, false),
+		// WORDNET_DATA_DIR ("wordnet.dictionaryDir", String.class, false),
 		
+		/* XXX: unused too ? why ?
 		EXPERTISE_WEIGHT_TOPIC_CREATION ("expertise.weight.topic_creation", Integer.class, true),
 		EXPERTISE_WEIGHT_WORD_TOPIC_MATCH ("expertise.weight.word_topic_match", Integer.class, true),
 		EXPERTISE_WEIGHT_CATEGORY_CONTRIBUTION ("expertise.weight.category_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_DOCUMENT_CONTRIBUTION ("expertise.weight.document_contribution", Integer.class, true),
+		*/
 		EXPERTISE_WEIGHT_SECTION_1_CONTRIBUTION ("expertise.weight.section_1_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_2_CONTRIBUTION ("expertise.weight.section_2_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_3_CONTRIBUTION ("expertise.weight.section_3_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_4_CONTRIBUTION ("expertise.weight.section_4_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_5_CONTRIBUTION ("expertise.weight.section_5_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_6_CONTRIBUTION ("expertise.weight.section_6_contribution", Integer.class, true)
-
 		;
 		
-		private Class<? extends Object> type;
-		private Object defaultValue;
-		private String name;
-		private boolean mandatory;
+		private final Class<? extends Object> type;
+		private final Object defaultValue;
+		private final String name;
+		private final boolean mandatory;
 		
 		private Key(String key, Class<? extends Object> type, boolean mandatory, Object defaultValue) {
 			this.name = key;
@@ -238,6 +241,9 @@ public class Config {
 		}
 		String value = applicationProperties.getProperty(key.name);
 		if (value == null) {
+		    if (key.mandatory) {
+		        throw new IllegalArgumentException("no value for mandatory configuration key " + key.name);
+		    }
 			log.error("Property not found: " + key.name);
 		}
 		return value;
@@ -247,7 +253,7 @@ public class Config {
 	 * @see #getAppProperty(String)
 	 */
 	public static int getIntAppProperty(Key key) {
-		String value = applicationProperties.getProperty(key.name);
+		String value = getAppProperty(key); // applicationProperties.getProperty(key.name);
 		if (value == null) {
 			log.error("Property not found: " + key.name);
 		}
@@ -282,19 +288,19 @@ public class Config {
 	}
 
 	public static boolean getBooleanAppProperty(Key key) {
-		String value = applicationProperties.getProperty(key.name);
+		String value = getAppProperty(key); // applicationProperties.getProperty(key.name);
 		if (value == null) {
 			log.error("Property not found: " + key.name);
 		}
-		return Boolean.valueOf(applicationProperties.getProperty(key.name));
+		return Boolean.valueOf(value);
 	}
 
 	public static double getDoubleAppProperty(Key key) {
-		String value = applicationProperties.getProperty(key.name);
+		String value = getAppProperty(key); // applicationProperties.getProperty(key.name);
 		if (value == null) {
 			log.error("Property not found: " + key.name);
 		}
-		return Float.parseFloat(applicationProperties.getProperty(key.name));
+		return Float.parseFloat(value);
 	}
 
 }

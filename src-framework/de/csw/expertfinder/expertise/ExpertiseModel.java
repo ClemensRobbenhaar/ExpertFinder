@@ -657,6 +657,7 @@ public class ExpertiseModel {
 	private static void addLabels(Concept topic, Set<String> result) {
 	    OntModel model = OntologyIndex.get().getModel();
         OntClass clazz = model.getOntClass(topic.getUri());
+        // TODO: allow to use labels in all languages - same as OntologyIndex.createIndex
         ExtendedIterator<RDFNode> iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
         while(iter.hasNext()) {
             String label = ((Literal)iter.next()).getString();
@@ -762,26 +763,5 @@ public class ExpertiseModel {
 		return tf * idf;
 	}
 	
-	private void calcSim() {
-		OntologyIndex.get().load(OntologyIndex.class.getResource(Config.getAppProperty(Config.Key.ONTOLOGY_FILE)));
-		
-		OntologyIndex oi = OntologyIndex.get();
-		OntModel model = oi.getModel();
-		
-		persistenceStore.beginTransaction();
-		Query query = persistenceStore.createHQLQuery("from Concept");
-		List<Concept> concepts1 = (List<Concept>)query.list();
-
-		Query query1 = persistenceStore.createHQLQuery("from Concept");
-		List<Concept> concepts2 = (List<Concept>)query1.list();
-		persistenceStore.endTransaction();
-
-		for (Concept co1 : concepts1) {
-			OntClass c1 = model.getOntClass(co1.getUri());
-			for (Concept co2 : concepts2) {
-					OntClass c2 = model.getOntClass(co2.getUri());
-			}
-		}
-	}
 	
 }
