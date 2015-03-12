@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 
+<!--
+        <rdfs:label xml:lang="de"></rdfs:label>
+-->
 
 <!DOCTYPE rdf:RDF [
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
@@ -3856,8 +3859,9 @@ of the software.</rdfs:comment>
     <!-- http://www.owl-ontologies.com/unnamed.owl#Acceptance_Testing -->
 
     <owl:Class rdf:about="#Acceptance_Testing">
-        <rdfs:label xml:lang="en"
-            >Acceptance Testing</rdfs:label>
+        <rdfs:label xml:lang="en" >Acceptance Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Integrationstests</rdfs:label>
+        <rdfs:label xml:lang="de">Akzeptanztests</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Testing_Objective"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Acceptance testing checks the system behavior against the customer&#8217;s requirements.</rdfs:comment>
@@ -3869,6 +3873,8 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Activity">
         <rdfs:label xml:lang="en">Activity</rdfs:label>
+        <rdfs:label xml:lang="de">Aktivität</rdfs:label>
+        <rdfs:label xml:lang="de">Tätigkeit</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Activity_Diagrams"/>
     </owl:Class>
     
@@ -3879,6 +3885,8 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Activity_Diagrams">
         <rdfs:label xml:lang="en"
             >Activity Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Verhaltensdiagram</rdfs:label>
+        <rdfs:label xml:lang="de">Ablaufdiagram</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Behavioral_Descriptions"/>
         <rdfs:subClassOf rdf:resource="#Design_Team"/>
         <rdfs:subClassOf rdf:resource="#Object-oriented_Design"/>
@@ -3902,6 +3910,9 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Actor">
         <rdfs:label xml:lang="en">Actor</rdfs:label>
+        <rdfs:label xml:lang="de">Akteur</rdfs:label>
+        <rdfs:label xml:lang="de">Handelnder</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Use_Case_Diagrams"/>
     </owl:Class>
     
@@ -3956,6 +3967,10 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Application_Architectures">
         <rdfs:label xml:lang="en"
             >Application Architectures</rdfs:label>
+        <rdfs:label xml:lang="de">Softwarearchitektur</rdfs:label>
+        <rdfs:label xml:lang="de">Anwendungsarchitektur</rdfs:label>
+        <rdfs:label xml:lang="de">Programmarchitektur</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Software_Architecture"/>
     </owl:Class>
     
@@ -3976,6 +3991,9 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Architectural_Design">
         <rdfs:label xml:lang="en"
             >Architectural Design</rdfs:label>
+        <rdfs:label xml:lang="de">Architekturdesign</rdfs:label>
+        <rdfs:label xml:lang="de">Architekturentscheidung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Software_Architecture"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Architecturel design process from a decision perspective rather than from an activity perspective.</rdfs:comment>
@@ -4022,6 +4040,8 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Behavioral_Descriptions">
         <rdfs:label xml:lang="en"
             >Behavioral Descriptions</rdfs:label>
+        <rdfs:label xml:lang="de">Ablaufdiagram</rdfs:label>
+        <rdfs:label xml:lang="de">Ablaufbescheibung</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Design_Notations"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >It is used to describe the dynamic behavior of software and components.</rdfs:comment>
@@ -4045,6 +4065,7 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Binary_Entity_Relationship">
         <rdfs:label xml:lang="en"
             >Binary Entity Relationship</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Entity_Relationship"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -4176,6 +4197,7 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Class">
         <rdfs:label xml:lang="en">Class</rdfs:label>
+        <rdfs:label xml:lang="de">Klasse</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Aggregation_Models"/>
         <rdfs:subClassOf rdf:resource="#Class_Diagrams"/>
         <rdfs:subClassOf rdf:resource="#Classification_Models"/>
@@ -4216,6 +4238,9 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Class_Attribute">
         <rdfs:label xml:lang="en">Class Attribute</rdfs:label>
+        <rdfs:label xml:lang="de">Klassenattribute</rdfs:label>
+        <rdfs:label xml:lang="de">statische Variablen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Aggregation_Models"/>
         <rdfs:subClassOf rdf:resource="#Class_Diagrams"/>
         <rdfs:subClassOf rdf:resource="#Classification_Models"/>
@@ -4248,6 +4273,8 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Class_Diagrams">
         <rdfs:label xml:lang="en">Class Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Klassendiagram</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Design_Team"/>
         <rdfs:subClassOf rdf:resource="#Object-oriented_Design"/>
         <rdfs:subClassOf rdf:resource="#Structural_Descriptions"/>
@@ -4341,6 +4368,9 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Client">
         <rdfs:label xml:lang="en">Client</rdfs:label>
+        <rdfs:label xml:lang="de">Klient</rdfs:label> 
+        <rdfs:label xml:lang="de">Dienstnehmer</rdfs:label> 
+
         <rdfs:subClassOf rdf:resource="#Client-server_Models"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -4411,6 +4441,9 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Code_Documentation">
         <rdfs:label xml:lang="en"
             >Code Documentation</rdfs:label>
+        <rdfs:label xml:lang="de">Programmdokumentation</rdfs:label> 
+        <rdfs:label xml:lang="de">technische Dokumentation</rdfs:label><!-- XXX wrong, but used in text -->
+
         <rdfs:subClassOf rdf:resource="#Coding"/>
         <owl:disjointWith rdf:resource="#Code_Tuning"/>
         <owl:disjointWith rdf:resource="#Handling_Of_Error_Conditions"/>
@@ -4426,6 +4459,9 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Code_Tuning">
         <rdfs:label xml:lang="en">Code Tuning</rdfs:label>
+        <rdfs:label xml:lang="de">Performanceoptimierung</rdfs:label>
+        <rdfs:label xml:lang="de">herumschrauben</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Coding"/>
         <owl:disjointWith rdf:resource="#Handling_Of_Error_Conditions"/>
         <owl:disjointWith rdf:resource="#Resource_Usages"/>
@@ -4440,6 +4476,9 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Coding">
         <rdfs:label xml:lang="en">Coding</rdfs:label>
+        <rdfs:label xml:lang="de">entwickeln</rdfs:label>
+        <rdfs:label xml:lang="de">programmieren</rdfs:label>
+        <rdfs:label xml:lang="de">coden</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Construction"/>
     </owl:Class>
     
@@ -4450,6 +4489,9 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Collaboration_Diagrams">
         <rdfs:label xml:lang="en"
             >Collaboration Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Zusamenarbeitsdiagramme</rdfs:label>
+        <rdfs:label xml:lang="de">Ablaufdiagramme</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Behavioral_Descriptions"/>
         <rdfs:subClassOf rdf:resource="#Object-oriented_Design"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -4482,6 +4524,9 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Compilers">
         <rdfs:label xml:lang="en">Compilers</rdfs:label>
+        <rdfs:label xml:lang="de">Compiler</rdfs:label>
+        <rdfs:label xml:lang="de">Übersetzer</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Software_Construction_Tools"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Preprocessors, linker/loaders, and code generators.</rdfs:comment>
@@ -4511,6 +4556,7 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Component">
         <rdfs:label xml:lang="en">Component</rdfs:label>
+        <rdfs:label xml:lang="de">Komponente</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Component_Diagrams"/>
     </owl:Class>
     
@@ -4589,6 +4635,8 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Component_Diagrams">
         <rdfs:label xml:lang="en"
             >Component Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Komponentendiagramm</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Component-based_Design"/>
         <rdfs:subClassOf rdf:resource="#Structural_Descriptions"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -4710,6 +4758,9 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Configuration_Language">
         <rdfs:label xml:lang="en"
             >Configuration Language</rdfs:label>
+        <rdfs:label xml:lang="de">Konfigurationsbeschreibung</rdfs:label>
+        <rdfs:label xml:lang="de">Konfigurationssprache</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Construction_Languages"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The simplest type of construction language is a configuration language, in which software engineers choose from a limited set of predefined options to create new or custom software installations.</rdfs:comment>
@@ -4792,6 +4843,8 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Customers">
         <rdfs:label xml:lang="en">Customers</rdfs:label>
+        <rdfs:label xml:lang="de">Kunde</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#People"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This group comprises those who have commissioned the software or who represent the software&#8217;s target market.</rdfs:comment>
@@ -4816,6 +4869,9 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Data-processing_Systems">
         <rdfs:label xml:lang="en"
             >Data processing Systems</rdfs:label>
+        <rdfs:label xml:lang="de">Hintergrundprozess</rdfs:label>
+        <rdfs:label xml:lang="de">Hintergrundjob</rdfs:label><!-- nicht wirklich, das sind die instanzen -->
+
         <rdfs:subClassOf rdf:resource="#Application_Architectures"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Data-processing Systems are batch-processing systems where data is input and output in batches from a file or database rather than input from and output to a user terminal.</rdfs:comment>
@@ -4868,6 +4924,7 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Data_Flow_Diagrams">
         <rdfs:label xml:lang="en"
             >Data Flow Diagrams</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Behavioral_Descriptions"/>
         <rdfs:subClassOf rdf:resource="#Function-oriented_Design"/>
         <rdfs:subClassOf rdf:resource="#Language-processing_Systems"/>
@@ -4938,6 +4995,7 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Debuggers">
         <rdfs:label xml:lang="en">Debuggers</rdfs:label>
+        <rdfs:label xml:lang="de">Debugger</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Construction_Tools"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >These tools are considered a separate category since they support the software construction process, but they are different from program editors and compilers.</rdfs:comment>
@@ -5013,6 +5071,7 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Defect_Tracking">
         <rdfs:label xml:lang="en">Defect Tracking</rdfs:label>
+        <rdfs:label xml:lang="de">Fehlersuche</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Test_Activities"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -5042,6 +5101,10 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Delivery_Requirements">
         <rdfs:label xml:lang="en"
             >Delivery Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Lieferzeitpunkt</rdfs:label>
+        <rdfs:label xml:lang="de">Abgabetermin</rdfs:label>
+        <rdfs:label xml:lang="de">Fertigstellung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Delivery requirements specify when the product and its documentation are to be delivered.</rdfs:comment>
@@ -5054,6 +5117,8 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Deployment_Diagrams">
         <rdfs:label xml:lang="en"
             >Deployment Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Installationsdiagramm</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Object-oriented_Design"/>
         <rdfs:subClassOf rdf:resource="#Structural_Descriptions"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -5102,6 +5167,8 @@ of the software.</rdfs:comment>
     <owl:Class rdf:about="#Distributed_Network">
         <rdfs:label xml:lang="en"
             >Distributed Network</rdfs:label>
+        <rdfs:label xml:lang="de">Verteiltes Netzwerk</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Distributed_Client-server_Architectures"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -5209,6 +5276,7 @@ of the software.</rdfs:comment>
 
     <owl:Class rdf:about="#Editors">
         <rdfs:label xml:lang="en">Editors</rdfs:label>
+        <rdfs:label xml:lang="de">Editoren</rdfs:label><!-- homonym zu person, weche editiert -->
         <rdfs:subClassOf rdf:resource="#Software_Construction_Tools"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >These tools are used for the creation and modification of programs, and possibly the documents associated with them. They can be generalpurpose text or document editors, or they can be specialized for a target language.</rdfs:comment>
@@ -5245,6 +5313,7 @@ interoperate.</rdfs:comment>
 
     <owl:Class rdf:about="#Entity">
         <rdfs:label xml:lang="en">Entity</rdfs:label>
+        <rdfs:label xml:lang="de">Entität</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Entity-Relation-Attribute_Models"/>
         <rdfs:subClassOf rdf:resource="#Entity-relationship_Diagrams"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -5307,6 +5376,7 @@ interoperate.</rdfs:comment>
     <owl:Class rdf:about="#Entity_Relationship">
         <rdfs:label xml:lang="en"
             >Entity Relationship</rdfs:label>
+<rdfs:label xml:lang="de">Entitätsbeziehungen</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Entity-Relation-Attribute_Models"/>
         <rdfs:subClassOf rdf:resource="#Entity-relationship_Diagrams"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -5331,6 +5401,10 @@ interoperate.</rdfs:comment>
 
     <owl:Class rdf:about="#Error_Guessing">
         <rdfs:label xml:lang="en">Error Guessing</rdfs:label>
+        <rdfs:label xml:lang="de">Fehler vermuten</rdfs:label>
+        <rdfs:label xml:lang="de">Fehler erraten</rdfs:label>
+        <rdfs:label xml:lang="de">Fehler vorhersagen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Fault-based_Techniques"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >In error guessing, test cases are specifically designed by software engineers trying to figure out the most plausible faults in a given program. A good source of information is the history of faults discovered in earlier projects, as well as the software engineer&#8217;s expertise.</rdfs:comment>
@@ -5375,6 +5449,8 @@ interoperate.</rdfs:comment>
     <owl:Class rdf:about="#Event-based_Control">
         <rdfs:label xml:lang="en"
             >Event based Control</rdfs:label>
+<rdfs:label xml:lang="de">Ereignisbasierter Ablauf</rdfs:label>
+<rdfs:label xml:lang="de">Ereignisbasierter Kontrollfluss</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Control_Styles"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Rather than control information being embedded in a sub-system, each sub-system can respond to externally generated events. These events might come from other sub-systems or from the environment of the system.</rdfs:comment>
@@ -5440,6 +5516,7 @@ interoperate.</rdfs:comment>
 
     <owl:Class rdf:about="#External_Entity">
         <rdfs:label xml:lang="en">External Entity</rdfs:label>
+        <rdfs:label xml:lang="de">Externe Entität</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Data_Flow_Component"/>
     </owl:Class>
     
@@ -5461,6 +5538,9 @@ interoperate.</rdfs:comment>
 
     <owl:Class rdf:about="#Failure">
         <rdfs:label xml:lang="en">Failure</rdfs:label>
+        <rdfs:label xml:lang="de">Fehlschlag</rdfs:label>
+        <rdfs:label xml:lang="de">Fehlermeldung</rdfs:label>
+        <rdfs:label xml:lang="de">Fehler melden</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Testing-Related_Terminology"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >An undesired effect observed in the system&#8217;s delivered service. Testing can reveal failures, but it is the faults that can and must be removed.</rdfs:comment>
@@ -5472,6 +5552,12 @@ interoperate.</rdfs:comment>
 
     <owl:Class rdf:about="#Fault">
         <rdfs:label xml:lang="en">Fault</rdfs:label>
+        <rdfs:label xml:lang="de">Fehler</rdfs:label>
+        <rdfs:label xml:lang="de">Fehlerursache</rdfs:label><!-- XXX ??? not the same -->
+        <rdfs:label xml:lang="de">Mangel</rdfs:label>
+        <rdfs:label xml:lang="de">Versagen</rdfs:label>
+        <rdfs:label xml:lang="de">Schuld</rdfs:label><!-- homonym -->
+        <rdfs:label xml:lang="de">Defekt</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Testing-Related_Terminology"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The cause of a malfunction.</rdfs:comment>
@@ -5535,6 +5621,7 @@ interoperate.</rdfs:comment>
 
     <owl:Class rdf:about="#Flowcharts">
         <rdfs:label xml:lang="en">Flowcharts</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Behavioral_Descriptions"/>
         <rdfs:subClassOf rdf:resource="#Data_Structure_Centred_Design"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -5641,6 +5728,7 @@ elements.</rdfs:comment>
     <owl:Class rdf:about="#Functional_Requirements">
         <rdfs:label xml:lang="en"
             >Functional Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">funktionale Anforderugen</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Functional requirements describe the functions that the software is to execute. They are sometimes known as capabilities.</rdfs:comment>
@@ -5652,6 +5740,8 @@ elements.</rdfs:comment>
 
     <owl:Class rdf:about="#GUI_Testing">
         <rdfs:label xml:lang="en">GUI Testing</rdfs:label>
+        <rdfs:label xml:lang="de">UI Tests</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Application_Nature-based_Techniques"/>
     </owl:Class>
     
@@ -5671,6 +5761,9 @@ elements.</rdfs:comment>
 
     <owl:Class rdf:about="#Goals">
         <rdfs:label xml:lang="en">Goals</rdfs:label>
+        <rdfs:label xml:lang="de">Ziele</rdfs:label>
+        <rdfs:label xml:lang="de">Zielsetzung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Requirements_Sources"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >It refers to the overall, high-level objectives of the software. Software engineers need to pay particular attention to assessing the value (relative to priority) and cost of goals.</rdfs:comment>
@@ -5681,7 +5774,7 @@ elements.</rdfs:comment>
     <!-- http://www.owl-ontologies.com/unnamed.owl#Handler -->
 
     <owl:Class rdf:about="#Handler">
-        <rdfs:label xml:lang="en">Handler</rdfs:label>
+        <rdfs:label xml:lang="en">Handler</rdfs:label><!-- XXX after stemming: maybe honomyn to händler -->
         <rdfs:subClassOf rdf:resource="#Event-processing_Systems"/>
         <rdfs:subClassOf rdf:resource="#Interrupt-driven_Models"/>
     </owl:Class>
@@ -5693,6 +5786,9 @@ elements.</rdfs:comment>
     <owl:Class rdf:about="#Handling_Of_Error_Conditions">
         <rdfs:label xml:lang="en"
             >Handling Of Error Conditions</rdfs:label>
+        <rdfs:label xml:lang="de">Fehlerbehandluung</rdfs:label>
+        <rdfs:label xml:lang="de">Fehler behandeln</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Coding"/>
         <owl:disjointWith rdf:resource="#Resource_Usages"/>
         <owl:disjointWith rdf:resource="#Source_Code_Organisation"/>
@@ -5709,6 +5805,8 @@ elements.</rdfs:comment>
     <owl:Class rdf:about="#Implementation_Requirements">
         <rdfs:label xml:lang="en"
             >Implementation Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an die  Umsetzung</rdfs:label>
+        <rdfs:label xml:lang="de">Umsetzung Anforderungen</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Implementation requirements such as the programming language or design method used</rdfs:comment>
@@ -5721,6 +5819,7 @@ elements.</rdfs:comment>
     <owl:Class rdf:about="#Implementation_Team">
         <rdfs:label xml:lang="en"
             >Implementation Team</rdfs:label>
+        <rdfs:label xml:lang="de">Entwicklerteam</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Engineering_Project"/>
     </owl:Class>
     
@@ -5789,6 +5888,7 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
     <owl:Class rdf:about="#Integration_Testing">
         <rdfs:label xml:lang="en"
             >Integration Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Integrationstests</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Test_Levels"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Integration testing is the process of verifying the interaction between software components. Classical</rdfs:comment>
@@ -5834,6 +5934,8 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
 
     <owl:Class rdf:about="#Interface">
         <rdfs:label xml:lang="en">Interface</rdfs:label>
+        <rdfs:label xml:lang="de">Schnittstelle</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Component_Diagrams"/>
     </owl:Class>
     
@@ -5844,6 +5946,7 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
     <owl:Class rdf:about="#Interface_Description_Languages">
         <rdfs:label xml:lang="en"
             >Interface Description Languages</rdfs:label>
+        <rdfs:label xml:lang="en">IDL</rdfs:label><-- abbrev, no stemming, expect uppercase ?, homonym to Interactive Data Language -->
         <rdfs:subClassOf rdf:resource="#Component-based_Design"/>
         <rdfs:subClassOf rdf:resource="#Structural_Descriptions"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -5857,6 +5960,8 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
     <owl:Class rdf:about="#Interoperability_Requirements">
         <rdfs:label xml:lang="en"
             >Interoperability Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an Zusammenarbeit</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an Interoperabilität</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Interoperability requirements define how the system interacts with systems in other organisations</rdfs:comment>
@@ -5879,6 +5984,7 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
 
     <owl:Class rdf:about="#Interrupt">
         <rdfs:label xml:lang="en">Interrupt</rdfs:label>
+        <!-- rdfs:label xml:lang="de">Unterbrechung</rdfs:label -->
         <rdfs:subClassOf rdf:resource="#Event-processing_Systems"/>
         <rdfs:subClassOf rdf:resource="#Interrupt-driven_Models"/>
     </owl:Class>
@@ -5981,6 +6087,9 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
     <owl:Class rdf:about="#Large-grain_Objects">
         <rdfs:label xml:lang="en"
             >Large grain Objects</rdfs:label>
+        <!-- rdfs:label xml:lang="de">Grobkörniges Objekt</rdfs:label -->
+        <!-- rdfs:label xml:lang="de">Grobgranulares Objekt</rdfs:label -->
+
         <rdfs:subClassOf rdf:resource="#Distributed_Object_Architectures"/>
     </owl:Class>
     
@@ -5990,6 +6099,8 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
 
     <owl:Class rdf:about="#Layered_Models">
         <rdfs:label xml:lang="en">Layered Models</rdfs:label>
+        <rdfs:label xml:lang="de">Schichtmodell</rdfs:label>
+        <rdfs:label xml:lang="de">gechichtete Modelle</rdfs:label><!-- really ? -->
         <rdfs:subClassOf rdf:resource="#Systems_Organisation"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The layered model of an architecture organises a system into layers, each of which provide a set of services. Each layer can be though of as an abstract machine whose machine language is defined by the services provided by the layer. This &#8216;language&#8217; is used to implement the next level of abstract machine.</rdfs:comment>
@@ -6014,6 +6125,8 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Linguistic">
         <rdfs:label xml:lang="en">Linguistic</rdfs:label>
+        <rdfs:label xml:lang="de">Linguistisch</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Programming_Language"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Linguistic notations are distinguished in particular by the use of word-like strings of text to represent complex software constructions, and the combination of such word like strings into patterns that have a sentence-like syntax.</rdfs:comment>
@@ -6064,6 +6177,8 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Market_Analysts">
         <rdfs:label xml:lang="en">Market Analysts</rdfs:label>
+        <rdfs:label xml:lang="de"> Marktanalyst</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#People"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A mass-market product will not have a commissioning customer, so marketing people are often needed to establish what the market needs and to act as proxy customers.</rdfs:comment>
@@ -6085,6 +6200,8 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Mock-ups">
         <rdfs:label xml:lang="en">Mock ups</rdfs:label>
+        <rdfs:label xml:lang="de">Mocks</rdfs:label><!-- after stemming ? -->
+
         <rdfs:subClassOf rdf:resource="#Prototypes"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Paper mock-ups of screen designs.</rdfs:comment>
@@ -6140,6 +6257,7 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Network">
         <rdfs:label xml:lang="en">Network</rdfs:label>
+        <rdfs:label xml:lang="de">Netzwerk</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Client-server_Models"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -6161,6 +6279,8 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Node">
         <rdfs:label xml:lang="en">Node</rdfs:label>
+        <rdfs:label xml:lang="de">Node</rdfs:label>
+        <rdfs:label xml:lang="de">Knoten</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Deployment_Diagrams"/>
     </owl:Class>
     
@@ -6190,6 +6310,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Node_Relationship">
         <rdfs:label xml:lang="en"
             >Node Relationship</rdfs:label>
+        <rdfs:label xml:lang="de">Knotenbeziehung</rdfs:label>
+        <rdfs:label xml:lang="de">Beziehung zwischen Knoten</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Deployment_Diagrams"/>
     </owl:Class>
     
@@ -6200,6 +6322,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Non-functional_Requirements">
         <rdfs:label xml:lang="en"
             >Non functional Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">nichtfunktionale Anforderungen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Nonfunctional requirements are the ones that act to constrain the solution.</rdfs:comment>
@@ -6211,6 +6335,8 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Object">
         <rdfs:label xml:lang="en">Object</rdfs:label>
+        <rdfs:label xml:lang="de">Objekt</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Object_Diagrams"/>
     </owl:Class>
     
@@ -6219,7 +6345,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <!-- http://www.owl-ontologies.com/unnamed.owl#Object-Class -->
 
     <owl:Class rdf:about="#Object-Class">
-        <rdfs:label xml:lang="en">Object Class</rdfs:label>
+        <rdfs:label xml:lang="en">Object Class</rdfs:label><!-- TODO not what you think, it is a diagram -->
+
         <rdfs:subClassOf rdf:resource="#Collaboration_Diagrams"/>
     </owl:Class>
     
@@ -6230,6 +6357,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Object-oriented_Decomposition">
         <rdfs:label xml:lang="en"
             >Object oriented Decomposition</rdfs:label>
+        <rdfs:label xml:lang="de">objekt-orientierte Zerlegung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Modular_Decomposition_Styles"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Object-oriented decomposition where you decompose a system into a set of communicating objects.</rdfs:comment>
@@ -6242,6 +6371,7 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Object-oriented_Design">
         <rdfs:label xml:lang="en"
             >Object oriented Design</rdfs:label>
+        <rdfs:label xml:lang="de">objekt-orientiertes Design</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Design_Strategies_And_Methods"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Inheritance and polymorphism play a key role to the field of component-based design, where meta-information can be defined and accessed (through reflection, for example).</rdfs:comment>
@@ -6254,6 +6384,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Object-oriented_Testing">
         <rdfs:label xml:lang="en"
             >Object oriented Testing</rdfs:label>
+        <rdfs:label xml:lang="de">objekt-orientiertes Testen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Application_Nature-based_Techniques"/>
     </owl:Class>
     
@@ -6264,6 +6396,9 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Object_Aggregation">
         <rdfs:label xml:lang="en"
             >Object Aggregation</rdfs:label>
+        <rdfs:label xml:lang="de">objekt aggregierung</rdfs:label>
+        <rdfs:label xml:lang="de">objekte zusammenfassen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Object_Structural"/>
     </owl:Class>
     
@@ -6274,6 +6409,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Object_Association">
         <rdfs:label xml:lang="en"
             >Object Association</rdfs:label>
+        <rdfs:label xml:lang="de">objekte assoziieren</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Object_Structural"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -6290,6 +6427,11 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Object_Attribute">
         <rdfs:label xml:lang="en"
             >Object Attribute</rdfs:label>
+        <rdfs:label xml:lang="de">Objekt Attribut</rdfs:label>
+        <rdfs:label xml:lang="de">Objektattribut</rdfs:label>
+        <rdfs:label xml:lang="de">Objekt eigenschaft</rdfs:label>
+        <rdfs:label xml:lang="de">Objekteigenschaft</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Object_Diagrams"/>
     </owl:Class>
     
@@ -6331,6 +6473,8 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#Object_Diagrams">
         <rdfs:label xml:lang="en">Object Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Objekt Diagram</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Object-oriented_Design"/>
         <rdfs:subClassOf rdf:resource="#Structural_Descriptions"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -6407,6 +6551,8 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Operational_Environment">
         <rdfs:label xml:lang="en"
             >Operational Environment</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderung an Betrieb</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Requirements_Sources"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Requirements will be derived from the environment in which the software will be executed. These may be, for example, timing constraints in real-time software or interoperability constraints in an office environment. These must be actively sought out, because they can greatly affect software feasibility and cost, and restrict design choices.</rdfs:comment>
@@ -6429,7 +6575,7 @@ in that they state what testing can never achieve as opposed to what it actually
     <!-- http://www.owl-ontologies.com/unnamed.owl#Oracle -->
 
     <owl:Class rdf:about="#Oracle">
-        <rdfs:label xml:lang="en">Oracle</rdfs:label>
+        <rdfs:label xml:lang="en">Oracle</rdfs:label><!-- homonym tocompary -->
         <rdfs:subClassOf rdf:resource="#Testing_Issues"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >An oracle is any (human or mechanical) agent which decides whether a program behaved correctly in a given test, and accordingly produces a verdict of &#8220;pass&#8221; or &#8220;fail.&#8221;</rdfs:comment>
@@ -6452,7 +6598,7 @@ in that they state what testing can never achieve as opposed to what it actually
     <!-- http://www.owl-ontologies.com/unnamed.owl#Peer -->
 
     <owl:Class rdf:about="#Peer">
-        <rdfs:label xml:lang="en">Peer</rdfs:label>
+        <rdfs:label xml:lang="en">Peer</rdfs:label><!-- homonym to german name -->
         <rdfs:subClassOf rdf:resource="#Peer_To_Peer_Architecture"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The nodes in the network.</rdfs:comment>
@@ -6476,6 +6622,10 @@ in that they state what testing can never achieve as opposed to what it actually
 
     <owl:Class rdf:about="#People">
         <rdfs:label xml:lang="en">People</rdfs:label>
+        <rdfs:label xml:lang="de">Personen</rdfs:label>
+        <rdfs:label xml:lang="de">Leute</rdfs:label>
+        <rdfs:label xml:lang="de">Menschen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Domain_Vocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >People who participate in the software engineering process.</rdfs:comment>
@@ -6498,6 +6648,12 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Performance_Requirements">
         <rdfs:label xml:lang="en"
             >Performance Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an Performanz</rdfs:label>
+        <rdfs:label xml:lang="de">Performanz Anforderungen</rdfs:label>
+        <rdfs:label xml:lang="de">Performanzanforderungen</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an Ausführungszeit</rdfs:label>
+        <!-- ... here I give up, too many slightly different, propably incorrect alternatives -->
+
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >How fast the system must execute.</rdfs:comment>
@@ -6510,6 +6666,9 @@ in that they state what testing can never achieve as opposed to what it actually
     <owl:Class rdf:about="#Performance_Testing">
         <rdfs:label xml:lang="en"
             >Performance Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Performanztest</rdfs:label>
+        <rdfs:label xml:lang="de">Performanz testen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Testing_Objective"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This is specifically aimed at verifying that the software meets the specified performance requirements, for instance, capacity and response time. A specific kind of performance
@@ -6554,6 +6713,9 @@ testing is volume testing in which internal program or system limitations are tr
 
     <owl:Class rdf:about="#Processing_Step">
         <rdfs:label xml:lang="en">Processing Step</rdfs:label>
+        <rdfs:label xml:lang="de">Arbeitsschritt</rdfs:label>
+        <rdfs:label xml:lang="de">Schritt</rdfs:label><!-- loosely realted label intentially added -->
+
         <rdfs:subClassOf rdf:resource="#Flowchart_Component"/>
     </owl:Class>
     
@@ -6563,6 +6725,8 @@ testing is volume testing in which internal program or system limitations are tr
 
     <owl:Class rdf:about="#Processor">
         <rdfs:label xml:lang="en">Processor</rdfs:label>
+        <rdfs:label xml:lang="de">Prozessor</rdfs:label>
+        <rdfs:label xml:lang="de">CPU</rdfs:label><!-- only loosedly ... -->
         <rdfs:subClassOf rdf:resource="#Multiprocessor_Architectures"/>
     </owl:Class>
     
@@ -6573,6 +6737,8 @@ testing is volume testing in which internal program or system limitations are tr
     <owl:Class rdf:about="#Product_Requirements">
         <rdfs:label xml:lang="en"
             >Product Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Produktanforderugnen</rdfs:label><!-- todo: what exactly is this, other than functional requiremetns? -->
+
         <rdfs:subClassOf rdf:resource="#Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Product parameters are requirements on software to be developed.</rdfs:comment>
@@ -6600,6 +6766,8 @@ testing is volume testing in which internal program or system limitations are tr
     <owl:Class rdf:about="#Programming_Language">
         <rdfs:label xml:lang="en"
             >Programming Language</rdfs:label>
+        <rdfs:label xml:lang="de">Programmiersprache</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Construction_Languages"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >ProgrammingLanguage contains the least amount of information about specific application areas and development processes, and so require the most training and skill to use effectively.</rdfs:comment>
@@ -6621,6 +6789,10 @@ testing is volume testing in which internal program or system limitations are tr
 
     <owl:Class rdf:about="#Prototypes">
         <rdfs:label xml:lang="en">Prototypes</rdfs:label>
+        <rdfs:label xml:lang="de">Prototyp</rdfs:label>
+        <rdfs:label xml:lang="de">Vorlage</rdfs:label><!-- not really, but ... -->
+        <rdfs:label xml:lang="de">Bespiel</rdfs:label><!-- not really, but ... -->
+
         <rdfs:subClassOf rdf:resource="#Elicitation_Techniques"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A valuable tool for clarifying unclear requirements. They can act in a similar way to scenarios by providing users with a context within
@@ -6866,6 +7038,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Requirements">
         <rdfs:label xml:lang="en">Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >the needs and constraints placed on a software product that contribute to the solution of some real-world problem.</rdfs:comment>
@@ -6878,6 +7051,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Requirements_Analysis">
         <rdfs:label xml:lang="en"
             >Requirements Analysis</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungsanalyse</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The process of analyzing requirements.</rdfs:comment>
@@ -6950,6 +7124,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Requirements_Specification_Document">
         <rdfs:label xml:lang="en"
             >Requirements Specification Document</rdfs:label>
+        <rdfs:label xml:lang="de">Lastenheft</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Requirements_Specification"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -6967,6 +7143,9 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Resource_Usages">
         <rdfs:label xml:lang="en">Resource Usages</rdfs:label>
+        <rdfs:label xml:lang="de">Ressourcenverbrauch</rdfs:label><!-- TODO: literal translation, now what is meant here ? -->
+        <rdfs:label xml:lang="de">Ressourcemanagement</rdfs:label><!-- TODO: has homonym in QA  -->
+
         <rdfs:subClassOf rdf:resource="#Coding"/>
         <owl:disjointWith rdf:resource="#Source_Code_Organisation"/>
         <owl:disjointWith rdf:resource="#Understandable_Source_Code_Techniques"/>
@@ -6981,6 +7160,9 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Reusable_Units">
         <rdfs:label xml:lang="en">Reusable Units</rdfs:label>
+        <rdfs:label xml:lang="de">wiederverwendbare Einheiten</rdfs:label>
+        <rdfs:label xml:lang="de">wiederverwendbare Units</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Reuse"/>
     </owl:Class>
     
@@ -6990,6 +7172,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Reuse">
         <rdfs:label xml:lang="en">Reuse</rdfs:label>
+        <rdfs:label xml:lang="de">wiederverwendung</rdfs:label>
+        <rdfs:label xml:lang="de">wiederverwendbarkeit</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Construction"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Implementing software reuse entails more than creating and using libraries of assets. It requires formalizing the practice of reuse by integrating reuse processes and activities into the software life cycle.</rdfs:comment>
@@ -7033,6 +7217,9 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Safety_Requirements">
         <rdfs:label xml:lang="en"
             >Safety Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Sicherheitsanforderungen</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an Sicherheit</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
     </owl:Class>
     
@@ -7042,6 +7229,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Scenarios">
         <rdfs:label xml:lang="en">Scenarios</rdfs:label>
+        <rdfs:label xml:lang="en">Szenarien</rdfs:label>
+        <rdfs:label xml:lang="en">Szenario</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Elicitation_Techniques"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A valuable means for providing context to the elicitation of user requirements. They allow the software engineer to provide a framework for questions about user tasks by permitting &#8220;what if&#8221; and &#8220;how is this done&#8221; questions to be asked.</rdfs:comment>
@@ -7054,6 +7243,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Sequence_Diagrams">
         <rdfs:label xml:lang="en"
             >Sequence Diagrams</rdfs:label>
+        <rdfs:label xml:lang="de">Sequenzdiagramm</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Behavioral_Descriptions"/>
         <rdfs:subClassOf rdf:resource="#Object-oriented_Design"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -7066,6 +7256,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Server">
         <rdfs:label xml:lang="en">Server</rdfs:label>
+        <rdfs:label xml:lang="de">Server</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Client-server_Models"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -7081,6 +7272,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Service">
         <rdfs:label xml:lang="en">Service</rdfs:label>
+        <rdfs:label xml:lang="de">Dienst</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Service-oriented_System_Architecture"/>
     </owl:Class>
     
@@ -7157,6 +7350,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Architecture">
         <rdfs:label xml:lang="en"
             >Software Architecture</rdfs:label>
+        <rdfs:label xml:lang="de">Softwarearchitektur</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Design"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A software architecture is &#8220;a description of the subsystems and components of a software system and the relationships between them.&#8221;</rdfs:comment>
@@ -7169,6 +7363,10 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Construction">
         <rdfs:label xml:lang="en"
             >Software Construction</rdfs:label>
+        <rdfs:label xml:lang="de">Softwarerstellung</rdfs:label>
+        <rdfs:label xml:lang="de">Programmerstellung</rdfs:label>
+        <rdfs:label xml:lang="de">Programmierung</rdfs:label><!-- duh, very general -->
+
         <rdfs:subClassOf rdf:resource="#Software_Engineering_Domain"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The detailed creation of working, meaningful software.</rdfs:comment>
@@ -7181,6 +7379,10 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Construction_Tools">
         <rdfs:label xml:lang="en"
             >Software Construction Tools</rdfs:label>
+        <rdfs:label xml:lang="de">IDE</rdfs:label>
+        <rdfs:label xml:lang="de">Programmierwerkzeug</rdfs:label>
+        <rdfs:label xml:lang="de">Entwicklungsumgebung</rdfs:label><!-- not really ... -->
+
         <rdfs:subClassOf rdf:resource="#Software_Tools"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >These tools are used to produce and translate program representation (for instance, source code) which is sufficiently detailed and explicit to enable machine execution.</rdfs:comment>
@@ -7192,6 +7394,10 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Software_Design">
         <rdfs:label xml:lang="en">Software Design</rdfs:label>
+        <rdfs:label xml:lang="de">Softwaredesign</rdfs:label>
+        <rdfs:label xml:lang="de">Software Entwurf</rdfs:label>
+        <rdfs:label xml:lang="de">Softwareentwurf</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Software_Engineering_Domain"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The process of defining the architecture, components, interfaces, and other characteristics of a system or component and the result of that process.</rdfs:comment>
@@ -7250,6 +7456,10 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Engineering_Domain">
         <rdfs:label xml:lang="en"
             >Software Engineering</rdfs:label>
+        <rdfs:label xml:lang="de">Software  entwicklen</rdfs:label>
+        <rdfs:label xml:lang="de">Softwareentwicklung</rdfs:label>
+        <rdfs:label xml:lang="de">Programmentwicklung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Domain_Vocabulary"/>
     </owl:Class>
     
@@ -7270,6 +7480,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Engineers">
         <rdfs:label xml:lang="en"
             >Software Engineers</rdfs:label>
+        <rdfs:label xml:lang="de">Softwareentwickler</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#People"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >These individuals have a legitimate interest in profiting from developing the software by, for example, reusing components in other products.</rdfs:comment>
@@ -7294,6 +7506,9 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Requirements">
         <rdfs:label xml:lang="en"
             >Software Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Softwareanforderungen</rdfs:label>
+        <rdfs:label xml:lang="de">Anforderungen an die Software</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Software_Engineering_Domain"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >a software requirement is a property which must be exhibited by software developed or adapted to solve a particular problem.</rdfs:comment>
@@ -7318,6 +7533,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Software_Testing">
         <rdfs:label xml:lang="en"
             >Software Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Softwaretests</rdfs:label>
+        <rdfs:label xml:lang="de">Software testen</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Software_Engineering_Domain"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >An activity performed for evaluating product quality, and for improving it, by identifying defects and problems.</rdfs:comment>
@@ -7339,6 +7556,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Software_Tools">
         <rdfs:label xml:lang="en">Software Tools</rdfs:label>
+        <rdfs:label xml:lang="de">Entwicklungswerkzeug</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Software_Engineering_Domain"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Software development tools are the computer-based tools that are intended to assist the software life cycle processes.</rdfs:comment>
@@ -7351,6 +7570,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Source_Code_Organisation">
         <rdfs:label xml:lang="en"
             >Source Code Organisation</rdfs:label>
+        <rdfs:label xml:lang="de">Programmstruktur</rdfs:label><!-- not really, but often used that way --?
         <rdfs:subClassOf rdf:resource="#Coding"/>
         <owl:disjointWith rdf:resource="#Understandable_Source_Code_Techniques"/>
         <owl:disjointWith rdf:resource="#Use_Of_Control_Structures"/>
@@ -7365,6 +7585,9 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Space_Requirements">
         <rdfs:label xml:lang="en"
             >Space Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Platzanforderung</rdfs:label>
+        <rdfs:label xml:lang="de">Speicherplatzanforderung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >How much memory the system requires</rdfs:comment>
@@ -7432,6 +7655,10 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Stake_Holders">
         <rdfs:label xml:lang="en">Stake Holders</rdfs:label>
+        <rdfs:label xml:lang="de">Stakeholder</rdfs:label>
+        <rdfs:label xml:lang="de">Entscheider</rdfs:label><!-- not really -->
+        <rdfs:label xml:lang="de">Interessenvertreter</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Requirements_Sources"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Much software has proved unsatisfactory because it has stressed the requirements of one group of stakeholders at the expense of those of others. Hence, software is delivered which is difficult to use or which subverts the cultural or political structures of the customer organization. The software engineer needs to identify, represent, and manage the viewpoints of many different types of stakeholders.</rdfs:comment>
@@ -7444,6 +7671,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Standards_Requirements">
         <rdfs:label xml:lang="en"
             >Standards Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Standardisierungsanforderugnen</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Non-functional_Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Process standards that must be used</rdfs:comment>
@@ -7618,6 +7846,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Stress_Testing">
         <rdfs:label xml:lang="en">Stress Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Stresstest</rdfs:label>
+        <rdfs:label xml:lang="de">Lasttest</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Testing_Objective"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Stress testing exercises software at the maximum design load, as well as beyond it.</rdfs:comment>
@@ -7641,6 +7871,10 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Subsystem">
         <rdfs:label xml:lang="en">Subsystem</rdfs:label>
+        <rdfs:label xml:lang="de">Teilsystem</rdfs:label>
+        <rdfs:label xml:lang="de">Teilanwendung</rdfs:label>
+        <rdfs:label xml:lang="de">Untersystem</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Architectural_Models"/>
     </owl:Class>
     
@@ -7660,6 +7894,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#System_Requirements">
         <rdfs:label xml:lang="en"
             >System Requirements</rdfs:label>
+        <rdfs:label xml:lang="de">Systemanforderung</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Requirements"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >System requirements are the requirements for the system as a whole. In a system containing software components, software requirements are derived from system requirements.</rdfs:comment>
@@ -7712,6 +7948,8 @@ modifications have not caused unintended effects. In practice, the idea is to sh
 
     <owl:Class rdf:about="#Test-case">
         <rdfs:label xml:lang="en">Test case</rdfs:label>
+        <rdfs:label xml:lang="de">Testfall</rdfs:label>
+        <rdfs:label xml:lang="de">Testcase</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Test-case_Generation"/>
     </owl:Class>
     
@@ -7834,6 +8072,11 @@ materials.</rdfs:comment>
 
     <owl:Class rdf:about="#Test_Execution">
         <rdfs:label xml:lang="en">Test Execution</rdfs:label>
+        <rdfs:label xml:lang="de">Testausführung</rdfs:label>
+        <rdfs:label xml:lang="de">Testlauf</rdfs:label>
+        <rdfs:label xml:lang="de">Tests ausführen</rdfs:label>
+        <rdfs:label xml:lang="de">Test laufen</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Test_Activities"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -7866,6 +8109,7 @@ another person could replicate the results.</rdfs:comment>
     <owl:Class rdf:about="#Test_Execution_Frameworks">
         <rdfs:label xml:lang="en"
             >Test Execution Frameworks</rdfs:label>
+        <rdfs:label xml:lang="de">Testumgebung</rdfs:label><!-- not really ... -->
         <rdfs:subClassOf rdf:resource="#Software_Testing_Tools"/>
     </owl:Class>
     
@@ -8014,6 +8258,7 @@ by running one or more tests drawn from identified classes of executions deemed 
 
     <owl:Class rdf:about="#Testability">
         <rdfs:label xml:lang="en">Testability</rdfs:label>
+        <rdfs:label xml:lang="de">testbarkeit</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Testing_Issues"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The term &#8220;software testability&#8221; has two related but different meanings: on the one hand, it refers to the degree to which it is easy for software to fulfill a given test coverage criterion; on the other hand, it is defined as the likelihood, possibly measured statistically, that the software will expose a failure under testing, if it is faulty. Both meanings are important.</rdfs:comment>
@@ -8181,6 +8426,9 @@ by running one or more tests drawn from identified classes of executions deemed 
 
     <owl:Class rdf:about="#Unit_Testing">
         <rdfs:label xml:lang="en">Unit Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Unittests</rdfs:label>
+        <rdfs:label xml:lang="de">Unit Test</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Test_Levels"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Unit testing verifies the functioning in isolation of software pieces which are separately testable. Depending on the context, these could be the individual subprograms or a larger component made of tightly related units.</rdfs:comment>
@@ -8204,7 +8452,7 @@ by running one or more tests drawn from identified classes of executions deemed 
 
     <owl:Class rdf:about="#Usablity_Testing">
         <rdfs:label xml:lang="en"
-            >Usablity Testing</rdfs:label>
+            >Usability Testing</rdfs:label>
         <rdfs:subClassOf rdf:resource="#Testing_Objective"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This process evaluates how easy it is for end-users to use and learn the software, including user documentation; how effectively the software functions in supporting user tasks; and, finally, its ability to recover from user errors.</rdfs:comment>
@@ -8280,6 +8528,10 @@ by running one or more tests drawn from identified classes of executions deemed 
 
     <owl:Class rdf:about="#Users">
         <rdfs:label xml:lang="en">Users</rdfs:label>
+        <rdfs:label xml:lang="de">Nutzer</rdfs:label>
+        <rdfs:label xml:lang="de">Benutzer</rdfs:label>
+        <rdfs:label xml:lang="de">Anwender</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#People"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This group comprises those who will operate the software.</rdfs:comment>
@@ -8303,6 +8555,9 @@ by running one or more tests drawn from identified classes of executions deemed 
 
     <owl:Class rdf:about="#Viewpoints">
         <rdfs:label xml:lang="en">Viewpoints</rdfs:label>
+        <rdfs:label xml:lang="de">Sichtweise</rdfs:label>
+        <rdfs:label xml:lang="de">Standpunkt</rdfs:label>
+
         <rdfs:subClassOf rdf:resource="#Elicitation_Techniques"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Viewpoint-oriented approaches to requirements engineering organise both the elicitation process and the requirements themselves using viewpoints. A key strength of viewpoint-oriented analysis is that it recognises multiple perspectives and provides a framework for discovering conflicts in the requirements proposed by different stakeholders.</rdfs:comment>
@@ -8326,15 +8581,17 @@ by running one or more tests drawn from identified classes of executions deemed 
     <owl:Class rdf:about="#Web-based_Testing">
         <rdfs:label xml:lang="en"
             >Web based Testing</rdfs:label>
+        <rdfs:label xml:lang="de">Browsertests</rdfs:label>
+        <rdfs:label xml:lang="de">Browser tests</rdfs:label>
+        <rdfs:label xml:lang="de">Tests im Browser</rdfs:label>
+        <rdfs:label xml:lang="de">Selenium tests</rdfs:label>
+    
+
+
         <rdfs:subClassOf rdf:resource="#Application_Nature-based_Techniques"/>
     </owl:Class>
     
 
-
-    <!-- http://www.w3.org/2002/07/owl#Thing -->
-
-    <owl:Class rdf:about="&owl;Thing"/>
-    
 
 
     <!-- 
