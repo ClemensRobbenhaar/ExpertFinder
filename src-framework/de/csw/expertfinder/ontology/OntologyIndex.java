@@ -660,15 +660,14 @@ public class OntologyIndex {
 			if (!ontClass.isAnon()) {
 				// get all labels in the appropriate language
 			    // TODO: allow to use labels in all languages, or language dependent "indexes"
-				ExtendedIterator<RDFNode> labelIter = ontClass.listLabels(Config.getAppProperty(LANGUAGE));
-                // ExtendedIterator<RDFNode> labelIter = ontClass.listLabels(null);
+				// ExtendedIterator<RDFNode> labelIter = ontClass.listLabels(Config.getAppProperty(LANGUAGE));
+                ExtendedIterator<RDFNode> labelIter = ontClass.listLabels(null);
 				while (labelIter.hasNext()) {
-					String label = ((Literal)labelIter.next()).getString().toLowerCase();
-					
+					String label = ((Literal)labelIter.next()).getString();
 					allConceptLabels.put(label, ontClass);
 					
 					// Split each label into its words
-					String[] labelWords = label.split(DELIMITER_PATTERN_STRING);
+					String[] labelWords = label.toLowerCase().split(DELIMITER_PATTERN_STRING);
 					int length = Math.min(labelWords.length, maxTermSize); // do not take into account more than maxTermSize words per label
 					StringBuilder stemmedLabelBuf = new StringBuilder();
 					for (int i=0; i<length; i++) {
