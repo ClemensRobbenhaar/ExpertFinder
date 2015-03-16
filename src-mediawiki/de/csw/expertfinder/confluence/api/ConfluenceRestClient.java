@@ -53,8 +53,8 @@ public class ConfluenceRestClient {
     public void initialize() {
         HttpParams params = this.http.getParams();
         // ToDo: make configureable (one day)
-        HttpConnectionParams.setConnectionTimeout(params, 1000);
-        HttpConnectionParams.setSoTimeout(params, 1000);
+        HttpConnectionParams.setConnectionTimeout(params, 4000);
+        HttpConnectionParams.setSoTimeout(params, 10000);
         
         initialized = true;
     }
