@@ -8076,6 +8076,7 @@ materials.</rdfs:comment>
         <rdfs:label xml:lang="de">Testlauf</rdfs:label>
         <rdfs:label xml:lang="de">Tests ausführen</rdfs:label>
         <rdfs:label xml:lang="de">Test laufen</rdfs:label>
+        <rdfs:label xml:lang="de">Test</rdfs:label><!-- XXX: wrong, but otherwise we do not find anything -->
 
         <rdfs:subClassOf rdf:resource="#Test_Activities"/>
         <rdfs:subClassOf>
