@@ -605,6 +605,11 @@ public class OntologyIndex {
 			
 			// String ontologyFile = Config.getAppProperty(ONTOLOGY_FILE);
 			String baseConcept = Config.getAppProperty(ONTOLOGY_BASE_CONCEPT_URI);
+			
+			if (model.getOntClass(baseConcept) == null) {
+			    throw new IllegalArgumentException("unknown base concept "+baseConcept);
+			}
+			
 			String nsPrefix = model.getNsPrefixURI("");
 			
 			log.info("Calculating concept distance matrix");
@@ -612,7 +617,7 @@ public class OntologyIndex {
 					nsPrefix,
 					ontologyURL.toExternalForm(), 
 					nsPrefix,
-					baseConcept, 
+					baseConcept, /*  "the root class of the ontology" */
 					OntModelSpec.OWL_MEM_RDFS_INF);
 			log.info("concept distance matrix done");
 			

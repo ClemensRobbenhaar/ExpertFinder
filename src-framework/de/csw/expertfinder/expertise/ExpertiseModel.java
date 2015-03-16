@@ -39,10 +39,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -124,22 +120,7 @@ public class ExpertiseModel {
 	 * @return the author's credibility wrt. to the given topic.
 	 */
 	public double getCredibility(String authorName, String topicName) {
-		OntClass topicClass = OntologyIndex.get().getOntClass(topicName);
-		if (topicClass == null) {
-			return 0d;
-		}
-				
-		persistenceStore.beginTransaction();
-		Concept topic = persistenceStore.getConcept(topicClass.getURI());
-		Author author = persistenceStore.getAuthor(authorName);
-		persistenceStore.endTransaction();
-		
-		if (author == null || topic == null) {
-			return 0d;
-		}
-		
-		return getCredibility(author, topic);
-		
+		return getCredibility(getAuthorForName(authorName), getTopicForName(topicName));
 	}	
 
 
@@ -298,41 +279,16 @@ public class ExpertiseModel {
 	}
 	
 	public double getExpertiseScore(String authorName, String topicName) {
-	    topicName = topicName.toLowerCase();
-		OntClass topicClass = OntologyIndex.get().getOntClass(topicName);
-		if (topicClass == null) {
-		    
-		    for (ExtendedIterator<OntClass> it = OntologyIndex.get().getModel().listClasses(); it.hasNext(); ) {
-		        OntClass cls = it.next();
-		        System.err.print("we have class " + cls.getURI());
-		        for (ExtendedIterator<RDFNode> lbl = cls.listLabels(null); lbl.hasNext(); ) {
-		            String label = lbl.next().asLiteral().getString();
-		            System.err.print(" "+label);
-		        }
-		        System.err.println();
-		    }
-		    throw new IllegalStateException("no class for " + topicName);
-			//return 0d;
-		}
-				
-		persistenceStore.beginTransaction();
-		Concept topic = persistenceStore.getConcept(topicClass.getURI());
-		Author author = persistenceStore.getAuthor(authorName);
-		persistenceStore.endTransaction();
-		
-		if (author == null || topic == null) {
-			return 0d;
-		}
-		
-		return getExpertiseScore(author, topic);
+		return getExpertiseScore(getAuthorForName(authorName), getTopicForName(topicName));
 	}
 
 	public double getExpertiseScore(Author author, Concept topic) {
 		persistenceStore.beginTransaction();
 		AuthorCredibility authorCredibility = persistenceStore.getAuthorCredibility(author, topic);
 		persistenceStore.endTransaction();
-		if (authorCredibility == null)
-			return 0d;
+		if (authorCredibility == null || authorCredibility.getExpertiseAll() == null) {
+		    throw new IllegalStateException("no expertise found for "+ author.getName() + " and topic " + topic.getUri());
+		}
 		return authorCredibility.getExpertiseAll();
 	}
 	
@@ -347,22 +303,7 @@ public class ExpertiseModel {
 	 * @return
 	 */
 	public void calculateExpertiseScore(String authorName, String topicName) {
-		OntClass topicClass = OntologyIndex.get().getOntClass(topicName);
-		if (topicClass == null) {
-			return;
-		}
-				
-		persistenceStore.beginTransaction();
-		Concept topic = persistenceStore.getConcept(topicClass.getURI());
-		Author author = persistenceStore.getAuthor(authorName);
-		persistenceStore.endTransaction();
-		
-		if (author == null || topic == null) {
-			return;
-		}
-		
-		calculateExpertiseScore(author, topic);
-		
+		calculateExpertiseScore(getAuthorForName(authorName), getTopicForName(topicName));		
 	}
 
 	/**
@@ -376,12 +317,19 @@ public class ExpertiseModel {
 	 * @return
 	 */
 	public void calculateExpertiseScore(Author author, Concept topic) {
+	    // FIXME: this calculates "expertise" in its own transaction first ...
+        getRawExpertiseScore(author, topic);
+	    
 		persistenceStore.beginTransaction();
 		
 		AuthorCredibility authorCredibility = persistenceStore.getAuthorCredibility(author, topic);
 		
 		// my expertise for this topic
 		Double myExpertise = authorCredibility.getExpertise();
+		if (null == myExpertise) {
+		    throw new NullPointerException("call getRawExpertizeScore first");
+		}
+        // System.err.println("recalled " + myExpertise);
 		if (myExpertise == 0d) {
 			// we can stop here, because if my expertise is 0, I won't add anything to related topics either (I would add 0, which has no effect)
 			persistenceStore.endTransaction();
@@ -439,8 +387,15 @@ public class ExpertiseModel {
 			similarConceptAuthorCredibility.setExpertiseItemCountAll(newExpertiseItemCount);
 
 			persistenceStore.save(similarConceptAuthorCredibility);
-			
-			
+		}
+		
+		// preliminarily at least
+		if (authorCredibility.getCredibilityAll() == null) {
+		    authorCredibility.setCredibilityAll(myCredibility);
+		    authorCredibility.setCredibilityItemCountAll(myCredibilityItemCount);
+		    authorCredibility.setExpertiseAll(authorCredibility.getExpertise());
+		    authorCredibility.setExpertiseItemCountAll(authorCredibility.getExpertiseItemCount());
+		    persistenceStore.save(authorCredibility);
 		}
 		
 		persistenceStore.commitChanges();
@@ -523,8 +478,6 @@ public class ExpertiseModel {
 
 		List<Object[]> sections = persistenceStore.getContributionsToSectionsWithConceptForAuthor(topic, author);
 
-		
-		
 		// adding words to a section during one revision
 		long sectionId = -1L;
 		int sectionLevel = -1;
@@ -540,7 +493,11 @@ public class ExpertiseModel {
 
 			double sectionConceptSimilarity = (Double)contribution[POS_SECTION_SIMILARITY];
 			
-			expertise += sectionConceptSimilarity * sectionContributionWeights[sectionLevel-1];
+			double sectionexpt = sectionConceptSimilarity * sectionContributionWeights[sectionLevel-1];
+			if (sectionexpt == 0d) {
+			    System.err.println("what? zero expertise for "+ newSectionId+" as similarity " + sectionConceptSimilarity);
+			}
+            expertise += sectionexpt;
 		}
 		
 		// now the actual contributions (=words matching the concept)
@@ -566,12 +523,12 @@ public class ExpertiseModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public Set<String> getAuthorsForTopic(String topicName) {
-		
 		Set<String> result = new TreeSet<String>();
 		
 		OntClass clazz = OntologyIndex.get().getOntClass(topicName);
 		if (clazz == null) {
-			return Collections.EMPTY_SET;
+	        throw new IllegalArgumentException("no topic for "+ topicName);
+			// return Collections.EMPTY_SET;
 		}
 
 		String topicURI = clazz.getURI();
@@ -651,14 +608,20 @@ public class ExpertiseModel {
 		    addLabels(topic, result);
 		}
 		
+		//System.err.println("got labels "+ result.size());
+		
 		return result;
 	}
 	
 	private static void addLabels(Concept topic, Set<String> result) {
 	    OntModel model = OntologyIndex.get().getModel();
         OntClass clazz = model.getOntClass(topic.getUri());
+        if (clazz == null) {
+               throw new NullPointerException("no class for " + topic.getUri());
+        }
         // TODO: allow to use labels in all languages - same as OntologyIndex.createIndex
-        ExtendedIterator<RDFNode> iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
+        // ExtendedIterator<RDFNode> iter = clazz.listLabels(Config.getAppProperty(Config.Key.LANGUAGE));
+        ExtendedIterator<RDFNode> iter = clazz.listLabels(null);
         while(iter.hasNext()) {
             String label = ((Literal)iter.next()).getString();
             result.add(label);
@@ -681,8 +644,43 @@ public class ExpertiseModel {
         
         return names; 
     }
+    
+    /**
+     * @param topicName
+     * @throws IllegalArgumentException if there is not topic /concept for the given name
+     * @throws NullPointerException if topicName is null
+     * @return the matching concept, never null
+     */
+    private Concept getTopicForName(String topicName) {
+        OntClass clazz = OntologyIndex.get().getOntClass(topicName);
+        if (clazz == null) {
+            throw new IllegalArgumentException("no topic for "+ topicName);
+        }
 
-	
+        final String topicURI = clazz.getURI();
+
+        persistenceStore.beginTransaction();
+        
+        Concept topic = persistenceStore.getConcept(topicURI);
+        
+        persistenceStore.endTransaction();
+        
+        if (topic == null) {
+            throw new IllegalArgumentException("no topic for "+ topicURI);
+        }
+        return topic;
+    }
+
+    private Author getAuthorForName(String authorName) {
+        persistenceStore.beginTransaction();
+        Author author = persistenceStore.getAuthor(authorName);
+        persistenceStore.endTransaction();
+        if (author == null) {
+            throw new IllegalArgumentException("no author for "+ authorName);
+        }
+        return author;
+    }
+    
 	/**
 	 * Returns the TF/IDF weighting for the given word in the given document.
 	 * Does no word normalization in terms of lemmatization or stemming! If
@@ -694,10 +692,10 @@ public class ExpertiseModel {
 	 * @param word
 	 *            the word (lemma or stem)
 	 * @return the TF/IDF
-	 */
+	 *
 	public double getTFIDFWeight(Document document, String word) {
 		return getTFIDFWeight(document.getId(), word);
-	}
+	} */
 	
 	/**
 	 * Returns the TF/IDF weighting for the given word in the given document.
@@ -710,7 +708,7 @@ public class ExpertiseModel {
 	 * @param word
 	 *            the word (lemma or stem)
 	 * @return the TF/IDF
-	 */
+	 *
 	public double getTFIDFWeight(Long documentId, String word) {
 		persistenceStore.beginTransaction();
 		
@@ -761,7 +759,7 @@ public class ExpertiseModel {
 		double idf = Math.log((double)documentCount / (double)wordCorpusFreq);
 		
 		return tf * idf;
-	}
+	} */
 	
 	
 }
