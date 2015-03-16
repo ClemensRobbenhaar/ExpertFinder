@@ -673,9 +673,7 @@ public class PersistenceStoreFacade {
         SQLQuery query = session
                 .createSQLQuery("select d.id as documentId, s.id as sectionId, s.level as sectionLevel, revCreated.count as revisionCreated, revDeleted.count as revisionDeleted, a.id as deletor, sc.similarity as similarity "
                         + "from word w "
-                        +
-
-                        "join revision revCreated "
+                        + "join revision revCreated "
                         + "	on w.id_revision_created = revCreated.id "
                         + "	and revCreated.id_author = :authorId "
                         + "left outer join revision revDeleted "
