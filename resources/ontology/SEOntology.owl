@@ -5946,7 +5946,7 @@ need to be integrated with other software or hardware systems.</rdfs:comment>
     <owl:Class rdf:about="#Interface_Description_Languages">
         <rdfs:label xml:lang="en"
             >Interface Description Languages</rdfs:label>
-        <rdfs:label xml:lang="en">IDL</rdfs:label><-- abbrev, no stemming, expect uppercase ?, homonym to Interactive Data Language -->
+        <rdfs:label xml:lang="en">IDL</rdfs:label><!-- abbrev, no stemming, expect uppercase ?, homonym to Interactive Data Language -->
         <rdfs:subClassOf rdf:resource="#Component-based_Design"/>
         <rdfs:subClassOf rdf:resource="#Structural_Descriptions"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -7570,7 +7570,7 @@ modifications have not caused unintended effects. In practice, the idea is to sh
     <owl:Class rdf:about="#Source_Code_Organisation">
         <rdfs:label xml:lang="en"
             >Source Code Organisation</rdfs:label>
-        <rdfs:label xml:lang="de">Programmstruktur</rdfs:label><!-- not really, but often used that way --?
+        <rdfs:label xml:lang="de">Programmstruktur</rdfs:label><!-- not really, but often used that way -->
         <rdfs:subClassOf rdf:resource="#Coding"/>
         <owl:disjointWith rdf:resource="#Understandable_Source_Code_Techniques"/>
         <owl:disjointWith rdf:resource="#Use_Of_Control_Structures"/>
