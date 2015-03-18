@@ -237,7 +237,7 @@ public class ExpertFinder {
 	 * @return
 	 */
 	public static double getReputation(String authorName, String topicName) {
-		return ExpertiseModel.get().getCredibility(authorName, topicName);
+		return ExpertiseModel.get().getRawCredibility(authorName, topicName);
 	}
 		
 }

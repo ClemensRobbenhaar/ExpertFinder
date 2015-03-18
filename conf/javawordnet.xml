@@ -20,7 +20,7 @@
 						<param value="-"/>
 					</param>
 					<param name="token_operations">
-                      "src/net/didion/jwnl/util/cache/LRUCacheSet.java"  <param value="net.didion.jwnl.dictionary.morph.LookupIndexWordOperation"/>
+                        <param value="net.didion.jwnl.dictionary.morph.LookupIndexWordOperation"/>
 						<param value="net.didion.jwnl.dictionary.morph.LookupExceptionsOperation"/>
 						<param value="net.didion.jwnl.dictionary.morph.DetachSuffixesOperation">
 							<param name="noun" value="|s=|ses=s|xes=x|zes=z|ches=ch|shes=sh|men=man|ies=y|"/>
@@ -38,9 +38,9 @@
 		<param name="dictionary_element_factory" value="net.didion.jwnl.princeton.data.PrincetonWN17DatabaseDictionaryElementFactory"/>
 		<param name="database_manager" value="net.didion.jwnl.dictionary.database.DatabaseManagerImpl">
 			<param name="driver" value="com.mysql.jdbc.Driver"/>
-			<param name="url" value="jdbc:mysql://localhost/wordnet"/>
+			<param name="url" value="jdbc:mysql://localhost:30306/wordnet"/>
 			<param name="username" value="expertfinder"/>
-			<param name="password" value="password (change me)"/>
+			<param name="password" value="expertfinder"/>
 		</param>
 	</dictionary>
 	<resource class="PrincetonResource"/>

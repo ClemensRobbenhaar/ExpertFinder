@@ -7,9 +7,9 @@
     
      	<!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/expertfinder</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:30306/expertfinder</property>
         <property name="hibernate.connection.username">expertfinder</property>
-        <property name="hibernate.connection.password">password (change me)</property>
+        <property name="hibernate.connection.password">expertfinder</property>
 
 		<!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
