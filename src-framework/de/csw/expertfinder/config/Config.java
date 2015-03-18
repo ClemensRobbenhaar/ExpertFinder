@@ -129,7 +129,11 @@ public class Config {
 		EXPERTISE_WEIGHT_SECTION_3_CONTRIBUTION ("expertise.weight.section_3_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_4_CONTRIBUTION ("expertise.weight.section_4_contribution", Integer.class, true),
 		EXPERTISE_WEIGHT_SECTION_5_CONTRIBUTION ("expertise.weight.section_5_contribution", Integer.class, true),
-		EXPERTISE_WEIGHT_SECTION_6_CONTRIBUTION ("expertise.weight.section_6_contribution", Integer.class, true)
+		EXPERTISE_WEIGHT_SECTION_6_CONTRIBUTION ("expertise.weight.section_6_contribution", Integer.class, true),
+		
+		// where to start the rest server. Only needs to be defined if rest server is used
+		REST_SERVER_BASE_URL("rest.server.baseUrl", String.class, false)
+
 		;
 		
 		private final Class<? extends Object> type;

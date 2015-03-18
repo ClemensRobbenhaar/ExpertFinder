@@ -27,6 +27,8 @@ package de.csw.expertfinder.expertise;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import de.csw.expertfinder.document.Author;
 import de.csw.expertfinder.document.Concept;
 import de.csw.expertfinder.document.PersistableEntity;
@@ -232,5 +234,8 @@ public class AuthorCredibility extends PersistableEntity<Serializable> implement
 		return author.hashCode() + 23 * concept.hashCode();
 	}
 
+	public String toString() {
+	    return ToStringBuilder.reflectionToString(this);
+	}
 	
 }

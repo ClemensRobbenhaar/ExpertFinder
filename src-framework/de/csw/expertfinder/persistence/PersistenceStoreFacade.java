@@ -79,7 +79,7 @@ public class PersistenceStoreFacade {
     }
 
     /** 
-     * interface for persintence callback for {@link #run } helper
+     * interface for persistence callback for {@link #run } helper
      *
      * @param <T> 
      */
@@ -763,6 +763,22 @@ public class PersistenceStoreFacade {
         query.setEntity("concept", concept);
         return (AuthorCredibility) query.uniqueResult();
     }
+
+    
+    @SuppressWarnings("unchecked")
+    public List<AuthorCredibility> getAllAuthorCredibility() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from AuthorCredibility order by author, concept");
+        return (List<AuthorCredibility>) query.list();
+    }
+
+    
+    public void removeAllAutorCredibility() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete from AuthorCredibility");
+        query.executeUpdate();
+    }
+
 
     /**
      * Stores a the given key-value pair in the application data table.

@@ -238,7 +238,32 @@
 	<classpathentry kind="lib" path="lib/opennlp/opennlp-maxent-3.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/opennlp/opennlp-tools-1.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/opennlp/opennlp-uima-1.5.3.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+	<classpathentry kind="lib" path="lib/jersey/aopalliance-repackaged-2.4.0-b10.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/grizzly-framework-2.3.16.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/grizzly-http-2.3.16.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/grizzly-http-server-2.3.16.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/hk2-api-2.4.0-b10.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/hk2-locator-2.4.0-b10.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/hk2-utils-2.4.0-b10.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/javax.ws.rs-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-client-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-common-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-container-grizzly2-http-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-entity-filtering-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-guava-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-media-jaxb-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-media-moxy-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/jersey-server-2.17.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/org.eclipse.persistence.antlr-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/org.eclipse.persistence.asm-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/org.eclipse.persistence.core-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/org.eclipse.persistence.moxy-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jersey/javax.inject-2.4.0-b10.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
