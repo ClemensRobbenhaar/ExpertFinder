@@ -52,7 +52,7 @@ public class SimpleExpertEvaluation {
 
         // TODO: first calculate, then return the calculated value in the second run.
 
-        em.calculateExpertiseAndCredibilityForAllAuthors(true);
+        em.calculateExpertiseAndCredibilityForAllAuthors(false);
 
         for (String author : authors) {
             System.out.println("Autor " + author);
