@@ -205,13 +205,13 @@ public class ExpertFinder {
 	}
 
 	/**
-     * Returns all topics the given author has contributed to.
-     * @param authorName
-     * @return
-     */
-    public static Set<String> getTopicsForAuthor(String authorName) {
-        return ExpertiseModel.get().getTopicsForAuthor(authorName);
-    }
+	 * Returns all topics the given author has contributed to.
+	 * @param authorName
+	 * @return
+	 */
+	public static Set<String> getTopicsForAuthor(String authorName) {
+		return ExpertiseModel.get().getTopicsForAuthor(authorName);
+	}
 
 	/**
 	 * Returns the given author's consolidated expertise score for the given
